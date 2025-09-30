@@ -1,4 +1,19 @@
-export enum TemplateCategory {
-  Login = 'LOGIN',
-  Toaster = 'TOASTER',
+/**
+ *
+ * @export
+ * @interface TemplateCategory
+ */
+export interface TemplateCategory {
+  /**
+   *
+   * @type {string}
+   * @memberof TemplateCategory
+   */
+  id: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TemplateCategory
+   */
+  name: string;
 }

@@ -1,5 +1,5 @@
 import { ServerTemplateConfiguration } from './server-template-configuration';
-import { TemplateCategory } from './template-category';
+import { TemplateCategoryId } from './template-category-id';
 
 /**
  *
@@ -12,7 +12,7 @@ export interface ServerTemplateCategory {
    * @type {string}
    * @memberof ServerTemplateCategory
    */
-  id: TemplateCategory;
+  id: TemplateCategoryId;
   /**
    *
    * @type {string}
@@ -25,4 +25,10 @@ export interface ServerTemplateCategory {
    * @memberof ServerTemplateCategory
    */
   configuration: Array<ServerTemplateConfiguration>;
+  /**
+   *
+   * @type {boolean}
+   * @memberof ServerTemplateCategory
+   */
+  isActive: boolean;
 }

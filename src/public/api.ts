@@ -142,4 +142,18 @@ export class PublicApi {
       options,
     });
   }
+
+  /**
+   * This endpoint retrieves a specific template by its ID for the server.
+   * @summary Get public template by ID
+   * @param {string} id
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getTemplateById(id: string, options?: ApiOptions): Promise<ServerTemplate> {
+    return this.client.get<ServerTemplate>({
+      url: `public/templates/${id}`,
+      options,
+    });
+  }
 }

@@ -1,4 +1,4 @@
-import { TemplateCategory } from '../../template/models/template-category';
+import { TemplateCategoryId } from '../../template/models/template-category-id';
 
 export interface DefaultNameTranslation {
   name: string;
@@ -101,7 +101,7 @@ export interface LocalizationData {
   };
   templates?: {
     [templateId: string]: {
-      [category in TemplateCategory]: {
+      [category in TemplateCategoryId]: {
         TEXTS: {
           [key: string]: TemplateTextTranslation;
         };

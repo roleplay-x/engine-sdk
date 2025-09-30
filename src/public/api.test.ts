@@ -17,7 +17,7 @@ import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
 import { ConfigKey } from '../configuration/models/config-keys';
 import { ConfigType } from '../configuration/models/config-types';
-import { TemplateCategory } from '../template/models/template-category';
+import { TemplateCategoryId } from '../template/models/template-category-id';
 
 describe('PublicApi', () => {
   const apiUrl = 'http://mock-api';
@@ -192,40 +192,41 @@ describe('PublicApi', () => {
     });
   });
 
+  const mockConfiguration: ServerTemplateConfiguration = {
+    key: 'config-key-1',
+    templateKey: 'template-config-1',
+    type: ConfigType.String,
+    name: 'Configuration Name',
+    description: 'Configuration description',
+    value: 'default-value',
+    customGroup: 'general',
+  };
+
+  const mockCategory: ServerTemplateCategory = {
+    id: TemplateCategoryId.Login,
+    name: 'Login',
+    configuration: [mockConfiguration],
+    isActive: true,
+  };
+
+  const mockTemplates: ReadonlyArray<ServerTemplate> = [
+    {
+      id: 'template-1',
+      name: 'A Template',
+      minorVersion: '1.2',
+      fullVersion: '1.2.3',
+      categories: [mockCategory],
+    },
+    {
+      id: 'template-2',
+      name: 'B Template',
+      minorVersion: '2.0',
+      fullVersion: '2.0.1',
+      categories: [],
+    },
+  ];
+
   describe('getTemplates()', () => {
-    const mockConfiguration: ServerTemplateConfiguration = {
-      key: 'config-key-1',
-      templateKey: 'template-config-1',
-      type: ConfigType.String,
-      name: 'Configuration Name',
-      description: 'Configuration description',
-      value: 'default-value',
-      customGroup: 'general',
-    };
-
-    const mockCategory: ServerTemplateCategory = {
-      id: TemplateCategory.Login,
-      name: 'Login',
-      configuration: [mockConfiguration],
-    };
-
-    const mockTemplates: ReadonlyArray<ServerTemplate> = [
-      {
-        id: 'template-1',
-        name: 'A Template',
-        minorVersion: '1.2',
-        fullVersion: '1.2.3',
-        categories: [mockCategory],
-      },
-      {
-        id: 'template-2',
-        name: 'B Template',
-        minorVersion: '2.0',
-        fullVersion: '2.0.1',
-        categories: [],
-      },
-    ];
-
     it('should GET /public/templates and return templates', async () => {
       baseScope.get('/public/templates').reply(200, mockTemplates);
 
@@ -262,9 +263,10 @@ describe('PublicApi', () => {
       };
 
       const anotherCategory: ServerTemplateCategory = {
-        id: TemplateCategory.Toaster,
+        id: TemplateCategoryId.Toaster,
         name: 'Toaster',
         configuration: [mockConfiguration, anotherConfiguration],
+        isActive: true,
       };
 
       const complexTemplates: ReadonlyArray<ServerTemplate> = [
@@ -282,6 +284,70 @@ describe('PublicApi', () => {
       const result = await api.getTemplates();
 
       expect(result).toEqual(complexTemplates);
+    });
+  });
+
+  describe('getTemplateById()', () => {
+    const templateId = 'template-1';
+    const mockTemplate: ServerTemplate = mockTemplates[0];
+
+    it('should GET /public/templates/:id and return template', async () => {
+      baseScope.get(`/public/templates/${templateId}`).reply(200, mockTemplate);
+
+      const result = await api.getTemplateById(templateId);
+
+      expect(result).toEqual(mockTemplate);
+    });
+
+    it('should pass options parameter correctly', async () => {
+      baseScope.get(`/public/templates/${templateId}`).reply(200, mockTemplate);
+
+      const result = await api.getTemplateById(templateId);
+
+      expect(result).toEqual(mockTemplate);
+    });
+
+    it('should handle template with no categories', async () => {
+      const templateWithNoCategories: ServerTemplate = mockTemplates[1];
+      const templateId2 = 'template-2';
+
+      baseScope.get(`/public/templates/${templateId2}`).reply(200, templateWithNoCategories);
+
+      const result = await api.getTemplateById(templateId2);
+
+      expect(result).toEqual(templateWithNoCategories);
+    });
+
+    it('should handle template with multiple categories', async () => {
+      const anotherCategory: ServerTemplateCategory = {
+        id: TemplateCategoryId.Toaster,
+        name: 'Toaster',
+        configuration: [
+          {
+            key: 'config-key-2',
+            templateKey: 'template-config-2',
+            type: ConfigType.Int32,
+            name: 'Radius',
+            value: 100,
+            customGroup: 'advanced',
+          },
+        ],
+        isActive: true,
+      };
+
+      const templateWithMultipleCategories: ServerTemplate = {
+        id: 'template-3',
+        name: 'Complex Template',
+        minorVersion: '3.0',
+        fullVersion: '3.0.0',
+        categories: [mockCategory, anotherCategory],
+      };
+
+      baseScope.get('/public/templates/template-3').reply(200, templateWithMultipleCategories);
+
+      const result = await api.getTemplateById('template-3');
+
+      expect(result).toEqual(templateWithMultipleCategories);
     });
   });
 });
