@@ -51,8 +51,28 @@ export class EngineClient {
     this.configs = { ...this.configs, locale };
   }
 
+  public getConfigs(): Readonly<ClientConfigs> {
+    return this.configs;
+  }
+
   public getApiUrl(): string {
     return this.configs.apiUrl;
+  }
+
+  public getServerId(): string {
+    return this.configs.serverId;
+  }
+
+  public getApplicationName(): string {
+    return this.configs.applicationName;
+  }
+
+  public getLocale(): string | undefined {
+    return this.configs.locale;
+  }
+
+  public getTimeout(): number | undefined {
+    return this.configs.timeout;
   }
 
   public request<T>(config: RequestConfigWithApiOptions): Promise<AxiosResponse<T>> {
