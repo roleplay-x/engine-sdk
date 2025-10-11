@@ -51,6 +51,10 @@ export class EngineClient {
     this.configs = { ...this.configs, locale };
   }
 
+  public getApiUrl(): string {
+    return this.configs.apiUrl;
+  }
+
   public request<T>(config: RequestConfigWithApiOptions): Promise<AxiosResponse<T>> {
     config.headers = this.getHeaders(config);
     return this.axiosInstance.request<T>(config);
