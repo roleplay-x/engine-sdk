@@ -203,7 +203,7 @@ describe('PublicApi', () => {
   };
 
   const mockCategory: ServerTemplateCategory = {
-    id: TemplateCategoryId.Login,
+    id: TemplateCategoryId.Auth,
     name: 'Login',
     configuration: [mockConfiguration],
     isActive: true,

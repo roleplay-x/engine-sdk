@@ -1,4 +1,4 @@
 export enum TemplateCategoryId {
-  Login = 'LOGIN',
+  Auth = 'AUTH',
   Toaster = 'TOASTER',
 }

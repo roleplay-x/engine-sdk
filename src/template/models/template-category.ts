@@ -1,3 +1,5 @@
+import { TemplateCategoryId } from './template-category-id';
+
 /**
  *
  * @export
@@ -6,10 +8,10 @@
 export interface TemplateCategory {
   /**
    *
-   * @type {string}
+   * @type {TemplateCategoryId}
    * @memberof TemplateCategory
    */
-  id: string;
+  id: TemplateCategoryId;
   /**
    *
    * @type {string}

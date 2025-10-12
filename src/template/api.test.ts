@@ -54,7 +54,7 @@ describe('TemplateApi', () => {
   };
 
   const mockCategory: ServerTemplateCategory = {
-    id: TemplateCategoryId.Login,
+    id: TemplateCategoryId.Auth,
     name: 'Login',
     configuration: [mockConfiguration],
     isActive: true,
@@ -284,11 +284,11 @@ describe('TemplateApi', () => {
   describe('getTemplateCategories()', () => {
     const mockCategories: ReadonlyArray<TemplateCategory> = [
       {
-        id: 'LOGIN',
-        name: 'Login',
+        id: TemplateCategoryId.Auth,
+        name: 'Authentication',
       },
       {
-        id: 'TOASTER',
+        id: TemplateCategoryId.Toaster,
         name: 'Toaster (Notifications)',
       },
     ];
@@ -321,8 +321,8 @@ describe('TemplateApi', () => {
     it('should handle single category', async () => {
       const singleCategory: ReadonlyArray<TemplateCategory> = [
         {
-          id: 'LOGIN',
-          name: 'Login',
+          id: TemplateCategoryId.Auth,
+          name: 'Authentication',
         },
       ];
 
