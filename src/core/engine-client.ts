@@ -33,7 +33,7 @@ export class EngineClient {
           const data = error.response.data;
           return Promise.reject(
             new EngineError(data.key, data.message, data.params, status, {
-              url: error.request.res.responseUrl,
+              url: error.request.res?.responseUrl,
             }),
           );
         }
