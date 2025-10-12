@@ -15,5 +15,11 @@ export interface AccountAuthRequest {
    * @type {string}
    * @memberof AccountAuthRequest
    */
+  email?: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof AccountAuthRequest
+   */
   password?: string | null;
 }
