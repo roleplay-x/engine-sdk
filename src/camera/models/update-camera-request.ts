@@ -27,31 +27,31 @@ export interface UpdateCameraRequest {
    * @type {CameraStaticRequest}
    * @memberof UpdateCameraRequest
    */
-  static?: CameraStaticRequest | null;
+  static?: CameraStaticRequest;
   /**
    *
    * @type {CameraFollowRequest}
    * @memberof UpdateCameraRequest
    */
-  follow?: CameraFollowRequest | null;
+  follow?: CameraFollowRequest;
   /**
    *
    * @type {CameraOrbitRequest}
    * @memberof UpdateCameraRequest
    */
-  orbit?: CameraOrbitRequest | null;
+  orbit?: CameraOrbitRequest;
   /**
    *
    * @type {CameraCinematicRequest}
    * @memberof UpdateCameraRequest
    */
-  cinematic?: CameraCinematicRequest | null;
+  cinematic?: CameraCinematicRequest;
   /**
    *
    * @type {string}
    * @memberof UpdateCameraRequest
    */
-  soundId?: string | null;
+  soundId?: string;
   /**
    *
    * @type {boolean}

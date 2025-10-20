@@ -7,6 +7,7 @@ import { Character } from '../character/models/character';
 import { ExternalLoginPreAuthRequest } from './models/external-login-pre-auth-request';
 import { ExternalLoginPreAuthResult } from './models/external-login-pre-auth-result';
 import { ExternalLoginAuthRequest } from './models/external-login-auth-request';
+import { AccountSummary } from './models/account-summary';
 
 export class AccountApi {
   constructor(private readonly client: EngineClient) {}
@@ -61,6 +62,20 @@ export class AccountApi {
     return this.client.get<Account>({
       url: `accounts/${accountId}`,
       query,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves a summary of an account by its unique identifier. This endpoint provides an overview of the account details for a specific player.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:account<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:account<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get account summary
+   * @param {string} accountId
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getAccountSummary(accountId: string, options?: ApiOptions): Promise<AccountSummary> {
+    return this.client.get<AccountSummary>({
+      url: `accounts/${accountId}/summary`,
       options,
     });
   }

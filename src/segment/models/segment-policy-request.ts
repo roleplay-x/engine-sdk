@@ -15,5 +15,5 @@ export interface SegmentPolicyRequest {
    * @type {object}
    * @memberof SegmentPolicyRequest
    */
-  vehicle?: object | null;
+  vehicle?: object;
 }

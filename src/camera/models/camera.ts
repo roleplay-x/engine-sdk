@@ -44,31 +44,31 @@ export interface Camera {
    * @type {CameraStatic}
    * @memberof Camera
    */
-  static: CameraStatic | null;
+  static?: CameraStatic;
   /**
    *
    * @type {CameraFollow}
    * @memberof Camera
    */
-  follow: CameraFollow | null;
+  follow?: CameraFollow;
   /**
    *
    * @type {CameraOrbit}
    * @memberof Camera
    */
-  orbit: CameraOrbit | null;
+  orbit?: CameraOrbit;
   /**
    *
    * @type {CameraCinematic}
    * @memberof Camera
    */
-  cinematic: CameraCinematic | null;
+  cinematic?: CameraCinematic;
   /**
    *
    * @type {string}
    * @memberof Camera
    */
-  soundId: string | null;
+  soundId?: string;
   /**
    *
    * @type {boolean}

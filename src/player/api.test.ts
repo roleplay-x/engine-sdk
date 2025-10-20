@@ -5,6 +5,7 @@ import { ChangeMyPasswordRequest } from './models/change-my-password-request';
 import { Character } from '../character/models/character';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
+import { AccountSummary } from '../account/models/account-summary';
 
 describe('PlayerApi', () => {
   const apiUrl = 'http://mock-api';
@@ -74,6 +75,69 @@ describe('PlayerApi', () => {
 
       const result = await api.getMyCurrentCharacter();
       expect(result).toEqual(mock);
+    });
+  });
+
+  describe('getMyAccountSummary()', () => {
+    const mockSummary: AccountSummary = {
+      id: 'acc123',
+      username: 'testuser',
+      locale: 'en-US',
+      email: 'test@example.com',
+      maxCharacters: 5,
+      charactersCount: 2,
+      accessPolicies: ['read:character', 'write:character'],
+    };
+
+    it('should GET /player/accounts/summary and return AccountSummary', async () => {
+      baseScope.get('/player/accounts/summary').reply(200, mockSummary);
+
+      const result = await api.getMyAccountSummary();
+
+      expect(result).toEqual(mockSummary);
+    });
+
+    it('should pass options parameter correctly', async () => {
+      baseScope.get('/player/accounts/summary').reply(200, mockSummary);
+
+      const result = await api.getMyAccountSummary({});
+
+      expect(result).toEqual(mockSummary);
+    });
+
+    it('should handle summary without email', async () => {
+      const summaryWithoutEmail: AccountSummary = {
+        id: 'acc456',
+        username: 'anotheruser',
+        locale: 'en-US',
+        maxCharacters: 3,
+        charactersCount: 1,
+        accessPolicies: [],
+      };
+
+      baseScope.get('/player/accounts/summary').reply(200, summaryWithoutEmail);
+
+      const result = await api.getMyAccountSummary();
+
+      expect(result).toEqual(summaryWithoutEmail);
+    });
+
+    it('should handle summary with empty access policies', async () => {
+      const summaryWithEmptyPolicies: AccountSummary = {
+        id: 'acc789',
+        username: 'newuser',
+        locale: 'en-US',
+        email: 'new@example.com',
+        maxCharacters: 10,
+        charactersCount: 0,
+        accessPolicies: [],
+      };
+
+      baseScope.get('/player/accounts/summary').reply(200, summaryWithEmptyPolicies);
+
+      const result = await api.getMyAccountSummary();
+
+      expect(result).toEqual(summaryWithEmptyPolicies);
     });
   });
 });

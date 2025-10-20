@@ -39,25 +39,25 @@ export interface CreateCameraRequest {
    * @type {CameraStaticRequest}
    * @memberof CreateCameraRequest
    */
-  static?: CameraStaticRequest | null;
+  static?: CameraStaticRequest;
   /**
    *
    * @type {CameraFollowRequest}
    * @memberof CreateCameraRequest
    */
-  follow?: CameraFollowRequest | null;
+  follow?: CameraFollowRequest;
   /**
    *
    * @type {CameraOrbitRequest}
    * @memberof CreateCameraRequest
    */
-  orbit?: CameraOrbitRequest | null;
+  orbit?: CameraOrbitRequest;
   /**
    *
    * @type {CameraCinematicRequest}
    * @memberof CreateCameraRequest
    */
-  cinematic?: CameraCinematicRequest | null;
+  cinematic?: CameraCinematicRequest;
   /**
    *
    * @type {string}

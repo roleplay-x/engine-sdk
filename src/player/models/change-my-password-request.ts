@@ -9,17 +9,17 @@ export interface ChangeMyPasswordRequest {
    * @type {string}
    * @memberof ChangeMyPasswordRequest
    */
-  currentPassword?: string | null;
+  currentPassword?: string;
   /**
    * New password for the user. It must meet the password policy requirements.
    * @type {string}
    * @memberof ChangeMyPasswordRequest
    */
-  newPassword?: string | null;
+  newPassword?: string;
   /**
    * Confirmation of the new password. It must match the newPassword field.
    * @type {string}
    * @memberof ChangeMyPasswordRequest
    */
-  confirmNewPassword?: string | null;
+  confirmNewPassword?: string;
 }

@@ -11,6 +11,7 @@ import { withCommonHeaders } from '../../test/utils/nock-helpers';
 import { ExternalLoginAuthRequest } from './models/external-login-auth-request';
 import { ExternalLoginPreAuthResult } from './models/external-login-pre-auth-result';
 import { ExternalLoginPreAuthRequest } from './models/external-login-pre-auth-request';
+import { AccountSummary } from './models/account-summary';
 
 describe('AccountApi', () => {
   const apiUrl = 'http://mock-api';
@@ -126,6 +127,70 @@ describe('AccountApi', () => {
 
       const result = await api.getAccountById(accountId, { includeSignInOptions: true });
       expect(result).toEqual(mockAccount);
+    });
+  });
+
+  describe('getAccountSummary()', () => {
+    const accountId = 'acc123';
+    const mockSummary: AccountSummary = {
+      id: accountId,
+      username: 'testuser',
+      locale: 'en-US',
+      email: 'test@example.com',
+      maxCharacters: 5,
+      charactersCount: 2,
+      accessPolicies: ['read:character', 'write:character'],
+    };
+
+    it('should GET /accounts/:id/summary and return AccountSummary', async () => {
+      baseScope.get(`/accounts/${accountId}/summary`).reply(200, mockSummary);
+
+      const result = await api.getAccountSummary(accountId);
+
+      expect(result).toEqual(mockSummary);
+    });
+
+    it('should pass options parameter correctly', async () => {
+      baseScope.get(`/accounts/${accountId}/summary`).reply(200, mockSummary);
+
+      const result = await api.getAccountSummary(accountId, {});
+
+      expect(result).toEqual(mockSummary);
+    });
+
+    it('should handle different account ids', async () => {
+      const anotherAccountId = 'acc456';
+      const anotherSummary: AccountSummary = {
+        id: anotherAccountId,
+        username: 'anotheruser',
+        locale: 'en-US',
+        maxCharacters: 3,
+        charactersCount: 1,
+        accessPolicies: [],
+      };
+
+      baseScope.get(`/accounts/${anotherAccountId}/summary`).reply(200, anotherSummary);
+
+      const result = await api.getAccountSummary(anotherAccountId);
+
+      expect(result).toEqual(anotherSummary);
+    });
+
+    it('should handle summary without email', async () => {
+      const summaryWithoutEmail: AccountSummary = {
+        id: accountId,
+        username: 'nomail',
+        locale: 'en-US',
+        maxCharacters: 10,
+        charactersCount: 0,
+        accessPolicies: ['read:account'],
+      };
+
+      baseScope.get(`/accounts/${accountId}/summary`).reply(200, summaryWithoutEmail);
+
+      const result = await api.getAccountSummary(accountId);
+
+      expect(result).toEqual(summaryWithoutEmail);
     });
   });
 
