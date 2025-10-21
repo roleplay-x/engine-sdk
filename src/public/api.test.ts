@@ -4,8 +4,6 @@ import { PublicApi } from './api';
 import { PublicConfig } from './models/public-config';
 import { Locale } from '../locale/models/locale';
 import { Localization } from '../localization/models/localization';
-import { CharacterGender } from '../character/models/character-gender';
-import { CharacterNationality } from '../character/models/character-nationality';
 import { ResendEmailVerificationRequest } from './models/resend-email-verification-request';
 import { VerifyEmailRequest } from './models/verify-email-request';
 import { ForgotPasswordRequest } from './models/forgot-password-request';
@@ -99,32 +97,6 @@ describe('PublicApi', () => {
 
       const result = await api.getLocalization();
       expect(result).toEqual(mockLoc);
-    });
-  });
-
-  describe('getCharacterGenders()', () => {
-    const mockGenders: CharacterGender[] = [
-      { id: 'FEMALE', enabled: true, order: 1, name: 'Female' } as CharacterGender,
-    ];
-
-    it('should GET /public/characters/genders and return genders', async () => {
-      baseScope.get('/public/characters/genders').reply(200, mockGenders);
-
-      const result = await api.getCharacterGenders();
-      expect(result).toEqual(mockGenders);
-    });
-  });
-
-  describe('getCharacterNationalities()', () => {
-    const mockNats: CharacterNationality[] = [
-      { id: 'n1', name: 'Atlantean', enabled: true, order: 1 } as CharacterNationality,
-    ];
-
-    it('should GET /public/characters/nationalities and return nationalities', async () => {
-      baseScope.get('/public/characters/nationalities').reply(200, mockNats);
-
-      const result = await api.getCharacterNationalities();
-      expect(result).toEqual(mockNats);
     });
   });
 

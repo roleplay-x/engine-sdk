@@ -2,8 +2,6 @@ import { ApiOptions, EngineClient } from '../core/engine-client';
 import { PublicConfig } from './models/public-config';
 import { Locale } from '../locale/models/locale';
 import { Localization, LocalizationData } from '../localization/models/localization';
-import { CharacterGender } from '../character/models/character-gender';
-import { CharacterNationality } from '../character/models/character-nationality';
 import { ResendEmailVerificationRequest } from './models/resend-email-verification-request';
 import { VerifyEmailRequest } from './models/verify-email-request';
 import { ForgotPasswordRequest } from './models/forgot-password-request';
@@ -42,29 +40,6 @@ export class PublicApi {
    */
   public getLocalization(path?: string, options?: ApiOptions): Promise<LocalizationData> {
     return this.client.get<Localization>({ url: 'public/localization', query: { path }, options });
-  }
-
-  /**
-   * This endpoint retrieves public character genders for the server.
-   * @summary Get public character genders
-   * @param {*} [options] Override http request option.
-   * @throws {EngineError}
-   */
-  public getCharacterGenders(options?: ApiOptions): Promise<CharacterGender[]> {
-    return this.client.get<CharacterGender[]>({ url: 'public/characters/genders', options });
-  }
-
-  /**
-   * This endpoint retrieves public character nationalities for the server.
-   * @summary Get public character nationalities
-   * @param {*} [options] Override http request option.
-   * @throws {EngineError}
-   */
-  public getCharacterNationalities(options?: ApiOptions): Promise<CharacterNationality[]> {
-    return this.client.get<CharacterNationality[]>({
-      url: 'public/characters/nationalities',
-      options,
-    });
   }
 
   /**
