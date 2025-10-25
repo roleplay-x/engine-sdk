@@ -64,6 +64,7 @@ export interface ConfigDefinitionsMap {
   [ConfigKey.CharacterFullNameValidationPattern]: ConfigRegex;
   [ConfigKey.CharacterNameForbiddenWords]: string;
   [ConfigKey.CharacterNationalityEnabled]: boolean;
+  [ConfigKey.CharacterInGameCreationEnabled]: boolean;
   [ConfigKey.CharacterMaxPerAccount]: number;
   [ConfigKey.CharacterDefaultHunger]: number;
   [ConfigKey.CharacterDefaultThirst]: number;

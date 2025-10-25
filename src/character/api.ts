@@ -7,9 +7,65 @@ import { UpdateCharacterNationalityOrderRequest } from './models/update-characte
 import { UpdateCharacterGenderOrderRequest } from './models/update-character-gender-order-request';
 import { UpdateCharacterBasicInfoRequest } from './models/update-character-basic-info-request';
 import { Character } from './models/character';
+import { CharacterSummary } from './models/character-summary';
+import { PaginatedItems } from '../common/paginated-items';
 
 export class CharacterApi {
   constructor(private readonly client: EngineClient) {}
+
+  /**
+   * Retrieves all characters. This endpoint is used to list characters.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:character<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:character<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get characters
+   * @param {Object} [query]                   Query parameters.
+   * @param {string} [query.accountId]               Filter characters by account ID.
+   * @param {boolean} [query.includeAppearance]      If `true`, include character appearance details in the response.
+   * @param {boolean} [query.includeMotives]         If `true`, include character motives data in the response.
+   * @param {boolean} [query.onlyActive]             If `true`, return only characters that are currently active.
+   * @param {number} [query.pageIndex]               Page index for pagination (0-based).
+   * @param {number} [query.pageSize]                Number of items per page.
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getCharacters(
+    query?: {
+      accountId?: string;
+      includeAppearance?: boolean;
+      includeMotives?: boolean;
+      onlyActive?: boolean;
+      pageIndex?: number;
+      pageSize?: number;
+    },
+    options?: ApiOptions,
+  ): Promise<PaginatedItems<Character>> {
+    return this.client.get<PaginatedItems<Character>>({
+      url: 'characters',
+      query,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves a character summary by its unique identifier<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:character<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:character<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get character summary by ID
+   * @param {string} characterId
+   * @param {Object} [query] Query parameters
+   * @param {boolean} [query.onlyActive] If `true`, return only if character is active.
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getCharacterSummaryById(
+    characterId: string,
+    query?: {
+      onlyActive?: boolean;
+    },
+    options?: ApiOptions,
+  ): Promise<CharacterSummary> {
+    return this.client.get<CharacterSummary>({
+      url: `characters/${characterId}/summaries`,
+      query,
+      options,
+    });
+  }
 
   /**
    * Creates a new character nationality<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:write:configuration<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: write:configuration<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]

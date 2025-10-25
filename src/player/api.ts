@@ -1,6 +1,7 @@
 import { ApiOptions, EngineClient } from '../core/engine-client';
 import { ChangeMyPasswordRequest } from './models/change-my-password-request';
 import { Character } from '../character/models/character';
+import { CharacterSummary } from '../character/models/character-summary';
 import { AccountSummary } from '../account/models/account-summary';
 import { CreateMyCharacterRequest } from './models/create-my-character-request';
 import { CharacterGender } from '../character/models/character-gender';
@@ -52,6 +53,33 @@ export class PlayerApi {
   }
 
   /**
+   * Retrieves a list of character summaries for the currently authenticated account<br/>This endpoint performs account-level operations. The token must be associated with an account.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get my character summaries
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getMyCharacterSummaries(options?: ApiOptions): Promise<CharacterSummary[]> {
+    return this.client.get<CharacterSummary[]>({
+      url: 'player/characters/summaries',
+      options,
+    });
+  }
+
+  /**
+   * Retrieves a character summary by ID<br/>This endpoint performs account-level operations. The token must be associated with an account.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get my character summary by ID
+   * @param {string} characterId
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getMyCharacterSummaryById(characterId: string, options?: ApiOptions): Promise<CharacterSummary> {
+    return this.client.get<CharacterSummary>({
+      url: `player/characters/${characterId}/summaries`,
+      options,
+    });
+  }
+
+  /**
    * This endpoint retrieves a summary of the currently authenticated account.<br/>This endpoint performs account-level operations. The token must be associated with an account.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
    * @summary Get my account summary
    * @param {*} [options] Override http request option.
@@ -59,7 +87,7 @@ export class PlayerApi {
    */
   public getMyAccountSummary(options?: ApiOptions): Promise<AccountSummary> {
     return this.client.get<AccountSummary>({
-      url: `player/accounts/summary`,
+      url: `player/accounts/summaries`,
       options,
     });
   }

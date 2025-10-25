@@ -27,6 +27,7 @@ const publicConfigKeys = [
   ConfigKey.CharacterLastNameMaxLength,
   ConfigKey.CharacterFullNameValidationPattern,
   ConfigKey.CharacterNationalityEnabled,
+  ConfigKey.CharacterInGameCreationEnabled,
   ConfigKey.MotivesSystemEnabled,
 ] as const;
 

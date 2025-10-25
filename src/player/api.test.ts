@@ -3,6 +3,7 @@ import { EngineClient } from '../core/engine-client';
 import { PlayerApi } from './api';
 import { ChangeMyPasswordRequest } from './models/change-my-password-request';
 import { Character } from '../character/models/character';
+import { CharacterSummary } from '../character/models/character-summary';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
 import { AccountSummary } from '../account/models/account-summary';
@@ -82,6 +83,110 @@ describe('PlayerApi', () => {
     });
   });
 
+  describe('getMyCharacters()', () => {
+    it('should GET /player/characters and return Character array', async () => {
+      const mockCharacters: Character[] = [
+        {
+          id: 'char1',
+          firstName: 'Jane',
+          lastName: 'Doe',
+          accountId: 'acc123',
+          createdDate: 176781234567,
+          lastModifiedDate: 176781234567,
+          birthDate: '1990-01-01',
+        } as Character,
+        {
+          id: 'char2',
+          firstName: 'John',
+          lastName: 'Smith',
+          accountId: 'acc123',
+          createdDate: 176781234567,
+          lastModifiedDate: 176781234567,
+          birthDate: '1985-05-15',
+        } as Character,
+      ];
+
+      baseScope.get('/player/characters').reply(200, mockCharacters);
+
+      const result = await api.getMyCharacters();
+      expect(result).toEqual(mockCharacters);
+    });
+  });
+
+  describe('getMyCharacterSummaries()', () => {
+    it('should GET /player/characters/summaries and return CharacterSummary array', async () => {
+      const mockSummaries: CharacterSummary[] = [
+        {
+          id: 'char1',
+          accountId: 'acc123',
+          firstName: 'Jane',
+          lastName: 'Doe',
+          fullName: 'Jane Doe',
+          birthDate: '1990-01-01',
+          age: 35,
+          gender: 'FEMALE',
+          genderName: 'Female',
+          nationality: 'AMERICAN',
+          nationalityName: 'American',
+          isActive: true,
+          totalSessionTimeSeconds: 3600,
+          lastSessionDate: 176781234567,
+          createdDate: 176781234567,
+          cash: 1000,
+        },
+        {
+          id: 'char2',
+          accountId: 'acc123',
+          firstName: 'John',
+          lastName: 'Smith',
+          fullName: 'John Smith',
+          birthDate: '1985-05-15',
+          age: 40,
+          gender: 'MALE',
+          genderName: 'Male',
+          isActive: false,
+          totalSessionTimeSeconds: 7200,
+          createdDate: 176781234567,
+          cash: 500,
+        },
+      ];
+
+      baseScope.get('/player/characters/summaries').reply(200, mockSummaries);
+
+      const result = await api.getMyCharacterSummaries();
+      expect(result).toEqual(mockSummaries);
+    });
+  });
+
+  describe('getMyCharacterSummaryById()', () => {
+    const characterId = 'char1';
+    const mockSummary: CharacterSummary = {
+      id: characterId,
+      accountId: 'acc123',
+      firstName: 'Jane',
+      lastName: 'Doe',
+      fullName: 'Jane Doe',
+      birthDate: '1990-01-01',
+      age: 35,
+      gender: 'FEMALE',
+      genderName: 'Female',
+      nationality: 'AMERICAN',
+      nationalityName: 'American',
+      isActive: true,
+      totalSessionTimeSeconds: 3600,
+      lastSessionDate: 176781234567,
+      createdDate: 176781234567,
+      cash: 1000,
+    };
+
+    it('should GET /player/characters/:id/summaries and return CharacterSummary', async () => {
+      baseScope.get(`/player/characters/${characterId}/summaries`).reply(200, mockSummary);
+
+      const result = await api.getMyCharacterSummaryById(characterId);
+      expect(result).toEqual(mockSummary);
+    });
+  });
+
   describe('getMyAccountSummary()', () => {
     const mockSummary: AccountSummary = {
       id: 'acc123',
@@ -93,8 +198,8 @@ describe('PlayerApi', () => {
       accessPolicies: ['read:character', 'write:character'],
     };
 
-    it('should GET /player/accounts/summary and return AccountSummary', async () => {
-      baseScope.get('/player/accounts/summary').reply(200, mockSummary);
+    it('should GET /player/accounts/summaries and return AccountSummary', async () => {
+      baseScope.get('/player/accounts/summaries').reply(200, mockSummary);
 
       const result = await api.getMyAccountSummary();
 
@@ -102,7 +207,7 @@ describe('PlayerApi', () => {
     });
 
     it('should pass options parameter correctly', async () => {
-      baseScope.get('/player/accounts/summary').reply(200, mockSummary);
+      baseScope.get('/player/accounts/summaries').reply(200, mockSummary);
 
       const result = await api.getMyAccountSummary({});
 
@@ -119,7 +224,7 @@ describe('PlayerApi', () => {
         accessPolicies: [],
       };
 
-      baseScope.get('/player/accounts/summary').reply(200, summaryWithoutEmail);
+      baseScope.get('/player/accounts/summaries').reply(200, summaryWithoutEmail);
 
       const result = await api.getMyAccountSummary();
 
@@ -137,7 +242,7 @@ describe('PlayerApi', () => {
         accessPolicies: [],
       };
 
-      baseScope.get('/player/accounts/summary').reply(200, summaryWithEmptyPolicies);
+      baseScope.get('/player/accounts/summaries').reply(200, summaryWithEmptyPolicies);
 
       const result = await api.getMyAccountSummary();
 

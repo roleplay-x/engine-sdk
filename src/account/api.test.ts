@@ -5,7 +5,6 @@ import { RegisterAccountRequest } from './models/register-account-request';
 import { Account } from './models/account';
 import { AccountAuthRequest } from './models/account-auth-request';
 import { GrantAccessResult } from './models/grant-access-result';
-import { Character } from '../character/models/character';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
 import { ExternalLoginAuthRequest } from './models/external-login-auth-request';
@@ -142,8 +141,8 @@ describe('AccountApi', () => {
       accessPolicies: ['read:character', 'write:character'],
     };
 
-    it('should GET /accounts/:id/summary and return AccountSummary', async () => {
-      baseScope.get(`/accounts/${accountId}/summary`).reply(200, mockSummary);
+    it('should GET /accounts/:id/summaries and return AccountSummary', async () => {
+      baseScope.get(`/accounts/${accountId}/summaries`).reply(200, mockSummary);
 
       const result = await api.getAccountSummary(accountId);
 
@@ -151,7 +150,7 @@ describe('AccountApi', () => {
     });
 
     it('should pass options parameter correctly', async () => {
-      baseScope.get(`/accounts/${accountId}/summary`).reply(200, mockSummary);
+      baseScope.get(`/accounts/${accountId}/summaries`).reply(200, mockSummary);
 
       const result = await api.getAccountSummary(accountId, {});
 
@@ -169,7 +168,7 @@ describe('AccountApi', () => {
         accessPolicies: [],
       };
 
-      baseScope.get(`/accounts/${anotherAccountId}/summary`).reply(200, anotherSummary);
+      baseScope.get(`/accounts/${anotherAccountId}/summaries`).reply(200, anotherSummary);
 
       const result = await api.getAccountSummary(anotherAccountId);
 
@@ -186,58 +185,11 @@ describe('AccountApi', () => {
         accessPolicies: ['read:account'],
       };
 
-      baseScope.get(`/accounts/${accountId}/summary`).reply(200, summaryWithoutEmail);
+      baseScope.get(`/accounts/${accountId}/summaries`).reply(200, summaryWithoutEmail);
 
       const result = await api.getAccountSummary(accountId);
 
       expect(result).toEqual(summaryWithoutEmail);
-    });
-  });
-
-  describe('getAccountCharacters()', () => {
-    const accountId = 'acc123';
-    const mockChars: Character[] = [
-      {
-        id: 'c1',
-        firstName: 'John',
-        lastName: 'Doe',
-        accountId: 'acc123',
-        createdDate: 176781234567,
-        lastModifiedDate: 176781234567,
-        birthDate: '1990-09-10',
-      } as Character,
-    ];
-
-    it('should GET /accounts/:id/characters without query', async () => {
-      baseScope.get(`/accounts/${accountId}/characters`).reply(200, mockChars);
-
-      const result = await api.getAccountCharacters(accountId);
-      expect(result).toEqual(mockChars);
-    });
-
-    it('should include all provided query params', async () => {
-      const query = { includeAppearance: true, includeMotives: false, onlyActive: true };
-      baseScope
-        .get(`/accounts/${accountId}/characters`)
-        .query({
-          includeAppearance: 'true',
-          includeMotives: 'false',
-          onlyActive: 'true',
-        })
-        .reply(200, mockChars);
-
-      const result = await api.getAccountCharacters(accountId, query);
-      expect(result).toEqual(mockChars);
-    });
-
-    it('should include only non-null query params', async () => {
-      baseScope
-        .get(`/accounts/${accountId}/characters`)
-        .query({ includeAppearance: 'true' })
-        .reply(200, mockChars);
-
-      const result = await api.getAccountCharacters(accountId, { includeAppearance: true });
-      expect(result).toEqual(mockChars);
     });
   });
 

@@ -63,6 +63,7 @@ export enum ConfigKey {
   CharacterFullNameValidationPattern = 'CHARACTER_FULL_NAME_VALIDATION_PATTERN',
   CharacterNameForbiddenWords = 'CHARACTER_NAME_FORBIDDEN_WORDS',
   CharacterNationalityEnabled = 'CHARACTER_NATIONALITY_ENABLED',
+  CharacterInGameCreationEnabled = 'CHARACTER_IN_GAME_CREATION_ENABLED',
   CharacterMaxPerAccount = 'CHARACTER_MAX_PER_ACCOUNT',
 
   // CHARACTER - MOTIVES THRESHOLDS
@@ -165,6 +166,7 @@ export const configKeyToGroup: ConfigKeyToGroupMap = {
   CharacterFullNameValidationPattern: ConfigGroupKey.Character,
   CharacterNameForbiddenWords: ConfigGroupKey.Character,
   CharacterNationalityEnabled: ConfigGroupKey.Character,
+  CharacterInGameCreationEnabled: ConfigGroupKey.Character,
   CharacterMaxPerAccount: ConfigGroupKey.Character,
 
   // CHARACTER - MOTIVES THRESHOLDS

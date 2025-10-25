@@ -9,8 +9,10 @@ import { CreateCharacterGenderRequest } from './models/create-character-gender-r
 import { UpdateCharacterGenderOrderRequest } from './models/update-character-gender-order-request';
 import { UpdateCharacterBasicInfoRequest } from './models/update-character-basic-info-request';
 import { Character } from './models/character';
+import { CharacterSummary } from './models/character-summary';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
+import { PaginatedItems } from '../common/paginated-items';
 
 describe('CharacterApi', () => {
   const apiUrl = 'http://mock-api';
@@ -43,6 +45,133 @@ describe('CharacterApi', () => {
       throw new Error('Not all nock interceptors were used!');
     }
     nock.cleanAll();
+  });
+
+  describe('getCharacters()', () => {
+    const mockCharacters: Character[] = [
+      {
+        id: 'c1',
+        firstName: 'John',
+        lastName: 'Doe',
+        accountId: 'acc123',
+        gender: 'MALE',
+        genderName: 'Male',
+        isActive: true,
+        fullName: 'John Doe',
+        createdDate: 176781234567,
+        lastModifiedDate: 176781234567,
+        birthDate: '1990-01-01',
+      },
+      {
+        id: 'c2',
+        firstName: 'Jane',
+        lastName: 'Smith',
+        accountId: 'acc123',
+        gender: 'FEMALE',
+        genderName: 'Female',
+        isActive: false,
+        fullName: 'Jane Smith',
+        createdDate: 176781234567,
+        lastModifiedDate: 176781234567,
+        birthDate: '1992-05-15',
+      },
+    ];
+
+    const mockPaginatedResult: PaginatedItems<Character> = {
+      pageIndex: 0,
+      pageSize: 10,
+      pageCount: 1,
+      totalCount: 2,
+      items: mockCharacters,
+    };
+
+    it('should GET /characters without query', async () => {
+      baseScope.get('/characters').reply(200, mockPaginatedResult);
+
+      const result = await api.getCharacters();
+      expect(result).toEqual(mockPaginatedResult);
+    });
+
+    it('should include accountId query when provided', async () => {
+      baseScope.get('/characters').query({ accountId: 'acc123' }).reply(200, mockPaginatedResult);
+
+      const result = await api.getCharacters({ accountId: 'acc123' });
+      expect(result).toEqual(mockPaginatedResult);
+    });
+
+    it('should include all provided query params', async () => {
+      const query = {
+        accountId: 'acc123',
+        includeAppearance: true,
+        includeMotives: false,
+        onlyActive: true,
+        pageIndex: 0,
+        pageSize: 10,
+      };
+      baseScope
+        .get('/characters')
+        .query({
+          accountId: 'acc123',
+          includeAppearance: 'true',
+          includeMotives: 'false',
+          onlyActive: 'true',
+          pageIndex: '0',
+          pageSize: '10',
+        })
+        .reply(200, mockPaginatedResult);
+
+      const result = await api.getCharacters(query);
+      expect(result).toEqual(mockPaginatedResult);
+    });
+
+    it('should include only non-null query params', async () => {
+      baseScope
+        .get('/characters')
+        .query({ includeAppearance: 'true', pageIndex: '1' })
+        .reply(200, mockPaginatedResult);
+
+      const result = await api.getCharacters({ includeAppearance: true, pageIndex: 1 });
+      expect(result).toEqual(mockPaginatedResult);
+    });
+  });
+
+  describe('getCharacterSummaryById()', () => {
+    const characterId = 'char1';
+    const mockSummary: CharacterSummary = {
+      id: characterId,
+      accountId: 'acc123',
+      firstName: 'John',
+      lastName: 'Doe',
+      fullName: 'John Doe',
+      birthDate: '1990-01-01',
+      age: 35,
+      gender: 'MALE',
+      genderName: 'Male',
+      nationality: 'AMERICAN',
+      nationalityName: 'American',
+      isActive: true,
+      totalSessionTimeSeconds: 3600,
+      lastSessionDate: 176781234567,
+      createdDate: 176781234567,
+      cash: 1000,
+    };
+
+    it('should GET /characters/:id/summaries without query', async () => {
+      baseScope.get(`/characters/${characterId}/summaries`).reply(200, mockSummary);
+
+      const result = await api.getCharacterSummaryById(characterId);
+      expect(result).toEqual(mockSummary);
+    });
+
+    it('should include onlyActive query when provided', async () => {
+      baseScope
+        .get(`/characters/${characterId}/summaries`)
+        .query({ onlyActive: 'true' })
+        .reply(200, mockSummary);
+
+      const result = await api.getCharacterSummaryById(characterId, { onlyActive: true });
+      expect(result).toEqual(mockSummary);
+    });
   });
 
   describe('createCharacterNationality()', () => {
