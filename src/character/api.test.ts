@@ -135,6 +135,51 @@ describe('CharacterApi', () => {
     });
   });
 
+  describe('getCharacterById()', () => {
+    const characterId = 'c1';
+    const mockCharacter: Character = {
+      id: characterId,
+      firstName: 'John',
+      lastName: 'Doe',
+      accountId: 'acc123',
+      gender: 'MALE',
+      genderName: 'Male',
+      isActive: true,
+      fullName: 'John Doe',
+      createdDate: 176781234567,
+      lastModifiedDate: 176781234567,
+      birthDate: '1990-01-01',
+    };
+
+    it('should GET /characters/:id without query', async () => {
+      baseScope.get(`/characters/${characterId}`).reply(200, mockCharacter);
+
+      const result = await api.getCharacterById(characterId);
+      expect(result).toEqual(mockCharacter);
+    });
+
+    it('should include all query params when provided', async () => {
+      const query = { accountId: 'acc123', includeAppearance: true, includeMotives: false };
+      baseScope
+        .get(`/characters/${characterId}`)
+        .query({ accountId: 'acc123', includeAppearance: 'true', includeMotives: 'false' })
+        .reply(200, mockCharacter);
+
+      const result = await api.getCharacterById(characterId, query);
+      expect(result).toEqual(mockCharacter);
+    });
+
+    it('should include only non-null query params', async () => {
+      baseScope
+        .get(`/characters/${characterId}`)
+        .query({ includeAppearance: 'true' })
+        .reply(200, mockCharacter);
+
+      const result = await api.getCharacterById(characterId, { includeAppearance: true });
+      expect(result).toEqual(mockCharacter);
+    });
+  });
+
   describe('getCharacterSummaryById()', () => {
     const characterId = 'char1';
     const mockSummary: CharacterSummary = {

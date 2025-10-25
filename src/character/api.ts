@@ -45,6 +45,33 @@ export class CharacterApi {
   }
 
   /**
+   * Retrieves a character by its unique identifier<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:character<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:character<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get character by ID
+   * @param {string} characterId
+   * @param {Object} [query] Query parameters
+   * @param {string} [query.accountId] Filter by account ID.
+   * @param {boolean} [query.includeAppearance] If `true`, include character appearance details in the response.
+   * @param {boolean} [query.includeMotives] If `true`, include character motives data in the response.
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getCharacterById(
+    characterId: string,
+    query?: {
+      accountId?: string;
+      includeAppearance?: boolean;
+      includeMotives?: boolean;
+    },
+    options?: ApiOptions,
+  ): Promise<Character> {
+    return this.client.get<Character>({
+      url: `characters/${characterId}`,
+      query,
+      options,
+    });
+  }
+
+  /**
    * Retrieves a character summary by its unique identifier<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:character<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:character<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
    * @summary Get character summary by ID
    * @param {string} characterId
