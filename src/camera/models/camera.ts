@@ -40,6 +40,12 @@ export interface Camera {
    * @type {string}
    * @memberof Camera
    */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof Camera
+   */
   description: string;
   /**
    *
