@@ -21,7 +21,9 @@ export interface ConfigDefinitionsMap {
   [ConfigKey.SmtpVerificationEmailAccountFromName]: string;
 
   // WORLD - CAMERA
-  [ConfigKey.LoginScreenCamera]: ConfigSelectOption;
+  [ConfigKey.AuthScreenCamera]: ConfigSelectOption;
+  [ConfigKey.CharacterSelectionScreenCamera]: ConfigSelectOption;
+  [ConfigKey.CharacterAppearanceScreenCamera]: ConfigSelectOption;
 
   // ACCOUNT - AUTH
   [ConfigKey.AccountEmailRequired]: boolean;

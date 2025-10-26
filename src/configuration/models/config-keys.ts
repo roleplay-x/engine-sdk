@@ -19,7 +19,9 @@ export enum ConfigKey {
   SmtpVerificationEmailAccountFromName = 'SMTP_VERIFICATION_EMAIL_ACCOUNT_FROM_NAME',
 
   // WORLD - CAMERA
-  LoginScreenCamera = 'LOGIN_SCREEN_CAMERA',
+  AuthScreenCamera = 'AUTH_SCREEN_CAMERA',
+  CharacterSelectionScreenCamera = 'CHARACTER_SELECTION_SCREEN_CAMERA',
+  CharacterAppearanceScreenCamera = 'CHARACTER_APPEARANCE_SCREEN_CAMERA',
 
   // ACCOUNT
   // ACCOUNT - AUTH
@@ -102,7 +104,10 @@ export enum ConfigGroupKey {
   MotivesSystem = 'MOTIVES_SYSTEM',
 
   // WORLD
-  LoginScreen = 'LOGIN_SCREEN',
+  Screens = 'SCREENS',
+  AuthScreen = 'AUTH_SCREEN',
+  CharacterSelectionScreen = 'CHARACTER_SELECTION_SCREEN',
+  CharacterAppearanceScreen = 'CHARACTER_APPEARANCE_SCREEN',
 }
 
 export type ConfigKeyToGroupMap = {
@@ -128,8 +133,10 @@ export const configKeyToGroup: ConfigKeyToGroupMap = {
   SmtpVerificationEmailAccountFromMail: ConfigGroupKey.SmtpVerificationEmail,
   SmtpVerificationEmailAccountFromName: ConfigGroupKey.SmtpVerificationEmail,
 
-  // WORLD - CAMERA - LOGIN SCREEN
-  LoginScreenCamera: ConfigGroupKey.LoginScreen,
+  // WORLD - CAMERA
+  AuthScreenCamera: ConfigGroupKey.AuthScreen,
+  CharacterSelectionScreenCamera: ConfigGroupKey.CharacterSelectionScreen,
+  CharacterAppearanceScreenCamera: ConfigGroupKey.CharacterAppearanceScreen,
 
   // ACCOUNT - AUTH
   AccountEmailRequired: ConfigGroupKey.Auth,
@@ -200,7 +207,10 @@ export const configGroupParents: Record<ConfigGroupKey, ConfigGroupKey | null> =
   [ConfigGroupKey.SmtpVerificationEmail]: ConfigGroupKey.Notification,
 
   // WORLD
-  [ConfigGroupKey.LoginScreen]: null,
+  [ConfigGroupKey.Screens]: null,
+  [ConfigGroupKey.AuthScreen]: ConfigGroupKey.Screens,
+  [ConfigGroupKey.CharacterSelectionScreen]: ConfigGroupKey.Screens,
+  [ConfigGroupKey.CharacterAppearanceScreen]: ConfigGroupKey.Screens,
 
   // ACCOUNT
   [ConfigGroupKey.Auth]: ConfigGroupKey.Account,
