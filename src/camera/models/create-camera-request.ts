@@ -3,6 +3,7 @@ import { CameraFollowRequest } from './camera-follow-request';
 import { CameraOrbitRequest } from './camera-orbit-request';
 import { CameraStaticRequest } from './camera-static-request';
 import { CameraType } from './camera';
+import { CameraPedEditRequest } from './camera-ped-edit-request';
 
 /**
  *
@@ -58,6 +59,12 @@ export interface CreateCameraRequest {
    * @memberof CreateCameraRequest
    */
   cinematic?: CameraCinematicRequest;
+  /**
+   *
+   * @type {CameraPedEditRequest}
+   * @memberof CreateCameraRequest
+   */
+  pedEdit?: CameraPedEditRequest;
   /**
    *
    * @type {string}

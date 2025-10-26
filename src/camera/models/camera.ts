@@ -2,12 +2,14 @@ import { CameraCinematic } from './camera-cinematic';
 import { CameraFollow } from './camera-follow';
 import { CameraOrbit } from './camera-orbit';
 import { CameraStatic } from './camera-static';
+import { CameraPedEdit } from './camera-ped-edit';
 
 export enum CameraType {
   Static = 'STATIC',
   Follow = 'FOLLOW',
   Orbit = 'ORBIT',
   Cinematic = 'CINEMATIC',
+  PedEdit = 'PED_EDIT',
 }
 
 export enum CameraTargetType {
@@ -45,6 +47,12 @@ export interface Camera {
    * @memberof Camera
    */
   static?: CameraStatic;
+  /**
+   *
+   * @type {CameraPedEdit}
+   * @memberof Camera
+   */
+  pedEdit?: CameraPedEdit;
   /**
    *
    * @type {CameraFollow}
