@@ -63,6 +63,7 @@ describe('CameraApi', () => {
       };
       const mock: Camera = {
         id: 'cam-static',
+        name: 'Cam Static',
         type: CameraType.Static,
         description: 'A static camera',
         static: {
@@ -112,6 +113,7 @@ describe('CameraApi', () => {
       };
       const mock: Camera = {
         id: 'cam-follow',
+        name: 'Cam Follow',
         type: CameraType.Follow,
         description: 'A follow camera',
         follow: {
@@ -158,6 +160,7 @@ describe('CameraApi', () => {
       };
       const mock: Camera = {
         id: 'cam-orbit',
+        name: 'Cam Orbit',
         type: CameraType.Orbit,
         description: 'An orbit camera',
         orbit: {
@@ -204,6 +207,7 @@ describe('CameraApi', () => {
       };
       const mock: Camera = {
         id: 'cam-cine',
+        name: 'Cam Cine',
         type: CameraType.Cinematic,
         description: 'A cinematic camera',
         cinematic: {
@@ -274,6 +278,7 @@ describe('CameraApi', () => {
     const cameraId = 'cam1';
     const mock: Camera = {
       id: 'cam1',
+      name: 'Cam1',
       type: CameraType.Static,
       description: 'Lookup',
       static: {
@@ -310,6 +315,7 @@ describe('CameraApi', () => {
     const list: Camera[] = [
       {
         id: 'cam1',
+        name: 'Cam1',
         type: CameraType.Static,
         description: '',
         static: {
@@ -329,6 +335,7 @@ describe('CameraApi', () => {
       },
       {
         id: 'cam2',
+        name: 'Cam2',
         type: CameraType.Follow,
         description: '',
         follow: {
