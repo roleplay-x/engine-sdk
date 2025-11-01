@@ -40,6 +40,21 @@ export class PlayerApi {
   }
 
   /**
+   * Retrieves appearance sections for the currently selected character<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get my current character appearance sections
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getMyCurrentCharacterAppearanceSections(
+    options?: ApiOptions,
+  ): Promise<BlueprintConfigSection[]> {
+    return this.client.get<BlueprintConfigSection[]>({
+      url: 'player/characters/current/appearance/sections',
+      options,
+    });
+  }
+
+  /**
    * This endpoint retrieves a list of characters associated with the currently authenticated account.<br/>This endpoint performs account-level operations. The token must be associated with an account.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
    * @summary Get my characters
    * @param {*} [options] Override http request option.
@@ -72,7 +87,10 @@ export class PlayerApi {
    * @param {*} [options] Override http request option.
    * @throws {EngineError}
    */
-  public getMyCharacterSummaryById(characterId: string, options?: ApiOptions): Promise<CharacterSummary> {
+  public getMyCharacterSummaryById(
+    characterId: string,
+    options?: ApiOptions,
+  ): Promise<CharacterSummary> {
     return this.client.get<CharacterSummary>({
       url: `player/characters/${characterId}/summaries`,
       options,

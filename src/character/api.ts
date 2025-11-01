@@ -6,6 +6,7 @@ import { CreateCharacterGenderRequest } from './models/create-character-gender-r
 import { UpdateCharacterNationalityOrderRequest } from './models/update-character-nationality-order-request';
 import { UpdateCharacterGenderOrderRequest } from './models/update-character-gender-order-request';
 import { UpdateCharacterBasicInfoRequest } from './models/update-character-basic-info-request';
+import { UpdateCharacterAppearanceRequest } from './models/update-character-appearance-request';
 import { Character } from './models/character';
 import { CharacterSummary } from './models/character-summary';
 import { PaginatedItems } from '../common/paginated-items';
@@ -90,6 +91,26 @@ export class CharacterApi {
     return this.client.get<CharacterSummary>({
       url: `characters/${characterId}/summaries`,
       query,
+      options,
+    });
+  }
+
+  /**
+   * Updates the appearance data of a character<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:write:character<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: write:character<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Update character appearance
+   * @param {string} characterId
+   * @param {UpdateCharacterAppearanceRequest} request
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public updateCharacterAppearance(
+    characterId: string,
+    request: UpdateCharacterAppearanceRequest,
+    options?: ApiOptions,
+  ): Promise<Character> {
+    return this.client.put<UpdateCharacterAppearanceRequest, Character>({
+      url: `characters/${characterId}/appearance`,
+      data: request,
       options,
     });
   }

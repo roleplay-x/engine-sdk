@@ -11,6 +11,7 @@ export interface BlueprintConfigSection {
   parentSectionId?: string;
   order: number;
   enabled: boolean;
+  visible: boolean;
   constraints: BlueprintConfigConstraints;
   configs?: ReadonlyArray<BlueprintConfig>;
   subSections?: ReadonlyArray<BlueprintConfigSection>;

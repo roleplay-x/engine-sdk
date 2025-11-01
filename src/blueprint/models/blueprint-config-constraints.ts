@@ -2,4 +2,5 @@ import { BlueprintAppearanceConfigConstraints } from './blueprint-appearance-con
 
 export interface BlueprintConfigConstraints {
   appearance?: BlueprintAppearanceConfigConstraints;
+  segmentDefinitionIds?: ReadonlyArray<string>;
 }

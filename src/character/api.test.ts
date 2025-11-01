@@ -219,6 +219,68 @@ describe('CharacterApi', () => {
     });
   });
 
+  describe('updateCharacterAppearance()', () => {
+    const characterId = 'char1';
+    const mockCharacter: Character = {
+      id: characterId,
+      firstName: 'John',
+      lastName: 'Doe',
+      accountId: 'acc123',
+      gender: 'MALE',
+      genderName: 'Male',
+      isActive: true,
+      fullName: 'John Doe',
+      createdDate: 176781234567,
+      lastModifiedDate: 176781234567,
+      birthDate: '1990-01-01',
+    };
+
+    it('should PUT /characters/:id/appearance with data only', async () => {
+      const request = { data: { hairColor: 'black', hairStyle: 'short' } };
+
+      baseScope
+        .put(`/characters/${characterId}/appearance`, (body) => {
+          expect(body).toEqual(request);
+          return true;
+        })
+        .reply(200, mockCharacter);
+
+      const result = await api.updateCharacterAppearance(characterId, request);
+      expect(result).toEqual(mockCharacter);
+    });
+
+    it('should PUT /characters/:id/appearance with base64Image', async () => {
+      const request = {
+        data: { hairColor: 'brown' },
+        base64Image: 'base64encodedstring',
+      };
+
+      baseScope
+        .put(`/characters/${characterId}/appearance`, (body) => {
+          expect(body).toEqual(request);
+          return true;
+        })
+        .reply(200, mockCharacter);
+
+      const result = await api.updateCharacterAppearance(characterId, request);
+      expect(result).toEqual(mockCharacter);
+    });
+
+    it('should PUT /characters/:id/appearance with empty data', async () => {
+      const request = {};
+
+      baseScope
+        .put(`/characters/${characterId}/appearance`, (body) => {
+          expect(body).toEqual(request);
+          return true;
+        })
+        .reply(200, mockCharacter);
+
+      const result = await api.updateCharacterAppearance(characterId, request);
+      expect(result).toEqual(mockCharacter);
+    });
+  });
+
   describe('createCharacterNationality()', () => {
     it('should POST /characters/nationalities and return CharacterNationality', async () => {
       const req: CreateCharacterNationalityRequest = {

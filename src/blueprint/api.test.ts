@@ -2,7 +2,7 @@ import nock from 'nock';
 import { EngineClient } from '../core/engine-client';
 import { BlueprintApi } from './api';
 import { BlueprintConfigSection } from './models/blueprint-config-section';
-import { BlueprintConfig } from './models/blueprint-config';
+import { BlueprintConfig, BlueprintConfigType } from './models/blueprint-config';
 import { BlueprintConfigOption } from './models/blueprint-config-option';
 import { BlueprintConfigColor } from './models/blueprint-config-color';
 import { CreateBlueprintConfigSectionRequest } from './models/create-blueprint-config-section-request';
@@ -56,6 +56,7 @@ describe('BlueprintApi', () => {
         name: 'Hair',
         order: 1,
         enabled: true,
+        visible: true,
         constraints: {},
       },
       {
@@ -66,6 +67,7 @@ describe('BlueprintApi', () => {
         name: 'Body',
         order: 2,
         enabled: true,
+        visible: true,
         constraints: {},
       },
     ];
@@ -125,6 +127,7 @@ describe('BlueprintApi', () => {
       name: 'Hair',
       order: 1,
       enabled: true,
+      visible: true,
       constraints: {},
     };
 
@@ -168,6 +171,7 @@ describe('BlueprintApi', () => {
       name: 'Face',
       order: 3,
       enabled: true,
+      visible: true,
       constraints: {},
     };
 
@@ -229,12 +233,13 @@ describe('BlueprintApi', () => {
       categoryName: 'Appearance',
       sectionId: 'section1',
       sectionKey: 'hair',
-      type: 'OPTION',
+      type: BlueprintConfigType.Dropdown,
       typeName: 'Option',
       key: 'hairStyle',
       name: 'Hair Style',
       order: 1,
       enabled: true,
+      optional: false,
       parameters: {},
       constraints: {},
     };
@@ -265,7 +270,7 @@ describe('BlueprintApi', () => {
   describe('createBlueprintConfig()', () => {
     const sectionId = 'section1';
     const request: CreateBlueprintConfigRequest = {
-      type: 'OPTION',
+      type: BlueprintConfigType.Dropdown,
       key: 'hairStyle',
       parameters: {},
       enabled: true,
@@ -278,12 +283,13 @@ describe('BlueprintApi', () => {
       categoryName: 'Appearance',
       sectionId,
       sectionKey: 'hair',
-      type: 'OPTION',
+      type: BlueprintConfigType.Dropdown,
       typeName: 'Option',
       key: 'hairStyle',
       name: 'Hair Style',
       order: 1,
       enabled: true,
+      optional: false,
       parameters: {},
       constraints: {},
     };
@@ -332,6 +338,7 @@ describe('BlueprintApi', () => {
       value: 'short',
       order: 1,
       enabled: true,
+      isDefault: false,
       constraints: {},
     };
 
@@ -361,6 +368,7 @@ describe('BlueprintApi', () => {
       value: 'long',
       order: 2,
       enabled: true,
+      isDefault: false,
       constraints: {},
     };
 
@@ -389,6 +397,7 @@ describe('BlueprintApi', () => {
       hex: '#000000',
       order: 1,
       enabled: true,
+      isDefault: false,
       constraints: {},
     };
 
@@ -420,6 +429,7 @@ describe('BlueprintApi', () => {
       hex: '#FF0000',
       order: 2,
       enabled: true,
+      isDefault: false,
       constraints: {},
     };
 

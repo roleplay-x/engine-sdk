@@ -1,3 +1,4 @@
 export interface BlueprintAppearanceConfigConstraints {
-  genders: ReadonlyArray<string>;
+  genders?: ReadonlyArray<string>;
+  nationalities?: ReadonlyArray<string>;
 }

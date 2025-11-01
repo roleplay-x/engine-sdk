@@ -9,5 +9,6 @@ export interface BlueprintConfigOption {
   asset?: string;
   order: number;
   enabled: boolean;
+  isDefault: boolean;
   constraints: BlueprintConfigConstraints;
 }

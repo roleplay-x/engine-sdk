@@ -10,5 +10,6 @@ export interface BlueprintConfigColor {
   index?: string;
   order: number;
   enabled: boolean;
+  isDefault: boolean;
   constraints: BlueprintConfigConstraints;
 }

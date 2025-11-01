@@ -83,6 +83,55 @@ describe('PlayerApi', () => {
     });
   });
 
+  describe('getMyCurrentCharacterAppearanceSections()', () => {
+    const mockSections: BlueprintConfigSection[] = [
+      {
+        id: 'section1',
+        category: 'APPEARANCE',
+        categoryName: 'Appearance',
+        key: 'hair',
+        name: 'Hair',
+        order: 1,
+        enabled: true,
+        visible: true,
+        constraints: {},
+      },
+      {
+        id: 'section2',
+        category: 'APPEARANCE',
+        categoryName: 'Appearance',
+        key: 'body',
+        name: 'Body',
+        order: 2,
+        enabled: true,
+        visible: true,
+        constraints: {},
+      },
+    ];
+
+    it('should GET /player/characters/current/appearance/sections and return sections', async () => {
+      baseScope.get('/player/characters/current/appearance/sections').reply(200, mockSections);
+
+      const result = await api.getMyCurrentCharacterAppearanceSections();
+      expect(result).toEqual(mockSections);
+    });
+
+    it('should pass options parameter correctly', async () => {
+      baseScope.get('/player/characters/current/appearance/sections').reply(200, mockSections);
+
+      const result = await api.getMyCurrentCharacterAppearanceSections({});
+      expect(result).toEqual(mockSections);
+    });
+
+    it('should handle empty sections list', async () => {
+      const emptySections: BlueprintConfigSection[] = [];
+      baseScope.get('/player/characters/current/appearance/sections').reply(200, emptySections);
+
+      const result = await api.getMyCurrentCharacterAppearanceSections();
+      expect(result).toEqual(emptySections);
+    });
+  });
+
   describe('getMyCharacters()', () => {
     it('should GET /player/characters and return Character array', async () => {
       const mockCharacters: Character[] = [
@@ -418,6 +467,7 @@ describe('PlayerApi', () => {
         name: 'Hair',
         order: 1,
         enabled: true,
+        visible: true,
         constraints: {},
       },
       {
@@ -428,6 +478,7 @@ describe('PlayerApi', () => {
         name: 'Face',
         order: 2,
         enabled: true,
+        visible: true,
         constraints: {},
       },
     ];

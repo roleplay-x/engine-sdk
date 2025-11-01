@@ -6,8 +6,20 @@
 export interface CharacterAppearance {
   /**
    *
-   * @type {object}
+   * @type {Record<string, string>}
    * @memberof CharacterAppearance
    */
-  data: object;
+  data: Record<string, string>;
+  /**
+   *
+   * @type {string}
+   * @memberof CharacterAppearance
+   */
+  imageUrl?: string;
+  /**
+   *
+   * @type {number}
+   * @memberof CharacterAppearance
+   */
+  version: number;
 }
