@@ -4,7 +4,7 @@ import { BlueprintApi } from './api';
 import { BlueprintConfigSection } from './models/blueprint-config-section';
 import { BlueprintConfig, BlueprintConfigType } from './models/blueprint-config';
 import { BlueprintConfigOption } from './models/blueprint-config-option';
-import { BlueprintConfigColor } from './models/blueprint-config-color';
+import { BlueprintConfigColor, BlueprintConfigColorType } from './models/blueprint-config-color';
 import { CreateBlueprintConfigSectionRequest } from './models/create-blueprint-config-section-request';
 import { CreateBlueprintConfigRequest } from './models/create-blueprint-config-request';
 import { CreateBlueprintConfigOptionRequest } from './models/create-blueprint-config-option-request';
@@ -425,7 +425,7 @@ describe('BlueprintApi', () => {
       configId,
       key: 'red',
       name: 'Red',
-      type: 'PRIMARY',
+      type: BlueprintConfigColorType.Rgb,
       hex: '#FF0000',
       order: 2,
       enabled: true,
