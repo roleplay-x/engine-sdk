@@ -2,9 +2,13 @@ import nock from 'nock';
 import { EngineClient } from '../core/engine-client';
 import { BlueprintApi } from './api';
 import { BlueprintConfigSection } from './models/blueprint-config-section';
-import { BlueprintConfig, BlueprintConfigType } from './models/blueprint-config';
+import {
+  BlueprintConfig,
+  BlueprintConfigCategory,
+  BlueprintConfigType,
+} from './models/blueprint-config';
 import { BlueprintConfigOption } from './models/blueprint-config-option';
-import { BlueprintConfigColor } from './models/blueprint-config-color';
+import { BlueprintConfigColor, BlueprintConfigColorType } from './models/blueprint-config-color';
 import { CreateBlueprintConfigSectionRequest } from './models/create-blueprint-config-section-request';
 import { CreateBlueprintConfigRequest } from './models/create-blueprint-config-request';
 import { CreateBlueprintConfigOptionRequest } from './models/create-blueprint-config-option-request';
@@ -50,7 +54,7 @@ describe('BlueprintApi', () => {
     const mockSections: ReadonlyArray<BlueprintConfigSection> = [
       {
         id: 'section1',
-        category: 'APPEARANCE',
+        category: BlueprintConfigCategory.CharacterAppearance,
         categoryName: 'Appearance',
         key: 'hair',
         name: 'Hair',
@@ -61,7 +65,7 @@ describe('BlueprintApi', () => {
       },
       {
         id: 'section2',
-        category: 'APPEARANCE',
+        category: BlueprintConfigCategory.CharacterAppearance,
         categoryName: 'Appearance',
         key: 'body',
         name: 'Body',
@@ -121,7 +125,7 @@ describe('BlueprintApi', () => {
     const sectionId = 'section1';
     const mockSection: BlueprintConfigSection = {
       id: sectionId,
-      category: 'APPEARANCE',
+      category: BlueprintConfigCategory.CharacterAppearance,
       categoryName: 'Appearance',
       key: 'hair',
       name: 'Hair',
@@ -165,7 +169,7 @@ describe('BlueprintApi', () => {
 
     const mockSection: BlueprintConfigSection = {
       id: 'section3',
-      category: 'APPEARANCE',
+      category: BlueprintConfigCategory.CharacterAppearance,
       categoryName: 'Appearance',
       key: 'face',
       name: 'Face',
@@ -229,7 +233,7 @@ describe('BlueprintApi', () => {
     const configId = 'config1';
     const mockConfig: BlueprintConfig = {
       id: configId,
-      category: 'APPEARANCE',
+      category: BlueprintConfigCategory.CharacterAppearance,
       categoryName: 'Appearance',
       sectionId: 'section1',
       sectionKey: 'hair',
@@ -279,7 +283,7 @@ describe('BlueprintApi', () => {
 
     const mockConfig: BlueprintConfig = {
       id: 'config2',
-      category: 'APPEARANCE',
+      category: BlueprintConfigCategory.CharacterAppearance,
       categoryName: 'Appearance',
       sectionId,
       sectionKey: 'hair',
@@ -393,7 +397,7 @@ describe('BlueprintApi', () => {
       configId: 'config1',
       key: 'black',
       name: 'Black',
-      type: 'PRIMARY',
+      type: BlueprintConfigColorType.Rgb,
       hex: '#000000',
       order: 1,
       enabled: true,
@@ -425,7 +429,7 @@ describe('BlueprintApi', () => {
       configId,
       key: 'red',
       name: 'Red',
-      type: 'PRIMARY',
+      type: BlueprintConfigColorType.Rgb,
       hex: '#FF0000',
       order: 2,
       enabled: true,

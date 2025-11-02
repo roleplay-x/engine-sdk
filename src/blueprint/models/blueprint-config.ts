@@ -12,9 +12,14 @@ export enum BlueprintConfigType {
   ColorPicker = 'COLOR_PICKER',
 }
 
+export enum BlueprintConfigCategory {
+  CharacterAppearance = 'CHARACTER_APPEARANCE',
+  VehicleModification = 'VEHICLE_MODIFICATION',
+}
+
 export interface BlueprintConfig {
   id: string;
-  category: string;
+  category: BlueprintConfigCategory;
   categoryName: string;
   sectionId: string;
   sectionKey: string;

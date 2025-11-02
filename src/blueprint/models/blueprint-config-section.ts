@@ -1,9 +1,9 @@
-import { BlueprintConfig } from './blueprint-config';
+import { BlueprintConfig, BlueprintConfigCategory } from './blueprint-config';
 import { BlueprintConfigConstraints } from './blueprint-config-constraints';
 
 export interface BlueprintConfigSection {
   id: string;
-  category: string;
+  category: BlueprintConfigCategory;
   categoryName: string;
   key: string;
   name: string;

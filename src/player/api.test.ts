@@ -11,6 +11,7 @@ import { CreateMyCharacterRequest } from './models/create-my-character-request';
 import { CharacterGender } from '../character/models/character-gender';
 import { CharacterNationality } from '../character/models/character-nationality';
 import { BlueprintConfigSection } from '../blueprint/models/blueprint-config-section';
+import { BlueprintConfigCategory } from '../blueprint/models/blueprint-config';
 
 describe('PlayerApi', () => {
   const apiUrl = 'http://mock-api';
@@ -87,7 +88,7 @@ describe('PlayerApi', () => {
     const mockSections: BlueprintConfigSection[] = [
       {
         id: 'section1',
-        category: 'APPEARANCE',
+        category: BlueprintConfigCategory.CharacterAppearance,
         categoryName: 'Appearance',
         key: 'hair',
         name: 'Hair',
@@ -98,7 +99,7 @@ describe('PlayerApi', () => {
       },
       {
         id: 'section2',
-        category: 'APPEARANCE',
+        category: BlueprintConfigCategory.CharacterAppearance,
         categoryName: 'Appearance',
         key: 'body',
         name: 'Body',
@@ -461,7 +462,7 @@ describe('PlayerApi', () => {
     const mockSections: ReadonlyArray<BlueprintConfigSection> = [
       {
         id: 'section1',
-        category: 'APPEARANCE',
+        category: BlueprintConfigCategory.CharacterAppearance,
         categoryName: 'Appearance',
         key: 'hair',
         name: 'Hair',
@@ -472,7 +473,7 @@ describe('PlayerApi', () => {
       },
       {
         id: 'section2',
-        category: 'APPEARANCE',
+        category: BlueprintConfigCategory.CharacterAppearance,
         categoryName: 'Appearance',
         key: 'face',
         name: 'Face',
