@@ -22,6 +22,7 @@ export enum ConfigKey {
   AuthScreenCamera = 'AUTH_SCREEN_CAMERA',
   CharacterSelectionScreenCamera = 'CHARACTER_SELECTION_SCREEN_CAMERA',
   CharacterAppearanceScreenCamera = 'CHARACTER_APPEARANCE_SCREEN_CAMERA',
+  SpawnLocationSelectionScreenCamera = 'SPAWN_LOCATION_SELECTION_SCREEN_CAMERA',
 
   // ACCOUNT
   // ACCOUNT - AUTH
@@ -108,6 +109,7 @@ export enum ConfigGroupKey {
   AuthScreen = 'AUTH_SCREEN',
   CharacterSelectionScreen = 'CHARACTER_SELECTION_SCREEN',
   CharacterAppearanceScreen = 'CHARACTER_APPEARANCE_SCREEN',
+  SpawnLocationSelectionScreen = 'SPAWN_LOCATION_SELECTION_SCREEN',
 }
 
 export type ConfigKeyToGroupMap = {
@@ -137,6 +139,7 @@ export const configKeyToGroup: ConfigKeyToGroupMap = {
   AuthScreenCamera: ConfigGroupKey.AuthScreen,
   CharacterSelectionScreenCamera: ConfigGroupKey.CharacterSelectionScreen,
   CharacterAppearanceScreenCamera: ConfigGroupKey.CharacterAppearanceScreen,
+  SpawnLocationSelectionScreenCamera: ConfigGroupKey.SpawnLocationSelectionScreen,
 
   // ACCOUNT - AUTH
   AccountEmailRequired: ConfigGroupKey.Auth,
@@ -211,6 +214,7 @@ export const configGroupParents: Record<ConfigGroupKey, ConfigGroupKey | null> =
   [ConfigGroupKey.AuthScreen]: ConfigGroupKey.Screens,
   [ConfigGroupKey.CharacterSelectionScreen]: ConfigGroupKey.Screens,
   [ConfigGroupKey.CharacterAppearanceScreen]: ConfigGroupKey.Screens,
+  [ConfigGroupKey.SpawnLocationSelectionScreen]: ConfigGroupKey.Screens,
 
   // ACCOUNT
   [ConfigGroupKey.Auth]: ConfigGroupKey.Account,

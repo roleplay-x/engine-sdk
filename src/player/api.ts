@@ -7,6 +7,7 @@ import { CreateMyCharacterRequest } from './models/create-my-character-request';
 import { CharacterGender } from '../character/models/character-gender';
 import { CharacterNationality } from '../character/models/character-nationality';
 import { BlueprintConfigSection } from '../blueprint/models/blueprint-config-section';
+import { SpawnLocation } from '../spawn-location/models/spawn-location';
 
 export class PlayerApi {
   constructor(private readonly client: EngineClient) {}
@@ -41,15 +42,26 @@ export class PlayerApi {
 
   /**
    * Retrieves appearance sections for the currently selected character<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
-   * @summary Get my current character appearance sections
+   * @summary Get my appearance sections
    * @param {*} [options] Override http request option.
    * @throws {EngineError}
    */
-  public getMyCurrentCharacterAppearanceSections(
-    options?: ApiOptions,
-  ): Promise<BlueprintConfigSection[]> {
+  public getMyAppearanceSections(options?: ApiOptions): Promise<BlueprintConfigSection[]> {
     return this.client.get<BlueprintConfigSection[]>({
-      url: 'player/characters/current/appearance/sections',
+      url: 'player/characters/appearance/sections',
+      options,
+    });
+  }
+
+  /**
+   * Retrieves available spawn locations for the currently selected character<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get my spawn locations
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getMySpawnLocations(options?: ApiOptions): Promise<SpawnLocation[]> {
+    return this.client.get<SpawnLocation[]>({
+      url: 'player/characters/spawn-locations',
       options,
     });
   }

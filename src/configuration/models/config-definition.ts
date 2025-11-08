@@ -24,6 +24,7 @@ export interface ConfigDefinitionsMap {
   [ConfigKey.AuthScreenCamera]: ConfigSelectOption;
   [ConfigKey.CharacterSelectionScreenCamera]: ConfigSelectOption;
   [ConfigKey.CharacterAppearanceScreenCamera]: ConfigSelectOption;
+  [ConfigKey.SpawnLocationSelectionScreenCamera]: ConfigSelectOption;
 
   // ACCOUNT - AUTH
   [ConfigKey.AccountEmailRequired]: boolean;

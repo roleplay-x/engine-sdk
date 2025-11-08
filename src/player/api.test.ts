@@ -12,6 +12,7 @@ import { CharacterGender } from '../character/models/character-gender';
 import { CharacterNationality } from '../character/models/character-nationality';
 import { BlueprintConfigSection } from '../blueprint/models/blueprint-config-section';
 import { BlueprintConfigCategory } from '../blueprint/models/blueprint-config';
+import { SpawnLocation } from '../spawn-location/models/spawn-location';
 
 describe('PlayerApi', () => {
   const apiUrl = 'http://mock-api';
@@ -84,7 +85,7 @@ describe('PlayerApi', () => {
     });
   });
 
-  describe('getMyCurrentCharacterAppearanceSections()', () => {
+  describe('getMyAppearanceSections()', () => {
     const mockSections: BlueprintConfigSection[] = [
       {
         id: 'section1',
@@ -110,26 +111,76 @@ describe('PlayerApi', () => {
       },
     ];
 
-    it('should GET /player/characters/current/appearance/sections and return sections', async () => {
-      baseScope.get('/player/characters/current/appearance/sections').reply(200, mockSections);
+    it('should GET /player/characters/appearance/sections and return sections', async () => {
+      baseScope.get('/player/characters/appearance/sections').reply(200, mockSections);
 
-      const result = await api.getMyCurrentCharacterAppearanceSections();
+      const result = await api.getMyAppearanceSections();
       expect(result).toEqual(mockSections);
     });
 
     it('should pass options parameter correctly', async () => {
-      baseScope.get('/player/characters/current/appearance/sections').reply(200, mockSections);
+      baseScope.get('/player/characters/appearance/sections').reply(200, mockSections);
 
-      const result = await api.getMyCurrentCharacterAppearanceSections({});
+      const result = await api.getMyAppearanceSections({});
       expect(result).toEqual(mockSections);
     });
 
     it('should handle empty sections list', async () => {
       const emptySections: BlueprintConfigSection[] = [];
-      baseScope.get('/player/characters/current/appearance/sections').reply(200, emptySections);
+      baseScope.get('/player/characters/appearance/sections').reply(200, emptySections);
 
-      const result = await api.getMyCurrentCharacterAppearanceSections();
+      const result = await api.getMyAppearanceSections();
       expect(result).toEqual(emptySections);
+    });
+  });
+
+  describe('getMySpawnLocations()', () => {
+    const mockSpawnLocations: SpawnLocation[] = [
+      {
+        id: 'spawn-1',
+        name: 'Downtown Spawn',
+        description: 'Main spawn point downtown',
+        cameraId: 'cam-1',
+        position: { x: 100, y: 200, z: 300, dimension: 0, w: 90 },
+        segmentDefinitionIds: ['seg-1'],
+        enabled: true,
+        order: 1,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+      {
+        id: 'spawn-2',
+        name: 'Beach Spawn',
+        description: 'Beach spawn point',
+        position: { x: 500, y: 100, z: 200, dimension: 0, w: 180 },
+        segmentDefinitionIds: ['seg-2', 'seg-3'],
+        enabled: true,
+        order: 2,
+        createdDate: 1610000002000,
+        lastModifiedDate: 1610000003000,
+      },
+    ];
+
+    it('should GET /player/characters/spawn-locations and return spawn locations', async () => {
+      baseScope.get('/player/characters/spawn-locations').reply(200, mockSpawnLocations);
+
+      const result = await api.getMySpawnLocations();
+      expect(result).toEqual(mockSpawnLocations);
+    });
+
+    it('should pass options parameter correctly', async () => {
+      baseScope.get('/player/characters/spawn-locations').reply(200, mockSpawnLocations);
+
+      const result = await api.getMySpawnLocations({});
+      expect(result).toEqual(mockSpawnLocations);
+    });
+
+    it('should handle empty spawn locations list', async () => {
+      const emptyLocations: SpawnLocation[] = [];
+      baseScope.get('/player/characters/spawn-locations').reply(200, emptyLocations);
+
+      const result = await api.getMySpawnLocations();
+      expect(result).toEqual(emptyLocations);
     });
   });
 

@@ -10,6 +10,7 @@ import { UpdateCharacterAppearanceRequest } from './models/update-character-appe
 import { Character } from './models/character';
 import { CharacterSummary } from './models/character-summary';
 import { PaginatedItems } from '../common/paginated-items';
+import { SpawnLocation } from '../spawn-location/models/spawn-location';
 
 export class CharacterApi {
   constructor(private readonly client: EngineClient) {}
@@ -91,6 +92,23 @@ export class CharacterApi {
     return this.client.get<CharacterSummary>({
       url: `characters/${characterId}/summaries`,
       query,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves available spawn locations for the character<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:character<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:character<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get character spawn locations
+   * @param {string} characterId
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getCharacterSpawnLocations(
+    characterId: string,
+    options?: ApiOptions,
+  ): Promise<SpawnLocation[]> {
+    return this.client.get<SpawnLocation[]>({
+      url: `characters/${characterId}/spawn-locations`,
       options,
     });
   }
