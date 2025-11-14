@@ -21,5 +21,11 @@ export interface AddLocaleRequest {
    * @type {string}
    * @memberof AddLocaleRequest
    */
-  iconUrl: string | null;
+  iconUrl?: string;
+  /**
+   * File ID from storage for the locale icon
+   * @type {string}
+   * @memberof AddLocaleRequest
+   */
+  fileId?: string;
 }

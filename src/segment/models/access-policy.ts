@@ -17,4 +17,6 @@ export enum AccessPolicy {
   LocalizationWrite = 'account_policy:write:localization',
   WorldWrite = 'account_policy:write:world',
   WorldRead = 'account_policy:read:world',
+  StorageWrite = 'account_policy:write:storage',
+  StorageRead = 'account_policy:read:storage',
 }
