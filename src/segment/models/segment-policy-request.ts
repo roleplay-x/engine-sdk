@@ -1,3 +1,5 @@
+import { SegmentAccountPolicyRequest } from './segment-account-policy-request';
+
 /**
  *
  * @export
@@ -16,4 +18,10 @@ export interface SegmentPolicyRequest {
    * @memberof SegmentPolicyRequest
    */
   vehicle?: object;
+  /**
+   *
+   * @type {SegmentAccountPolicyRequest}
+   * @memberof SegmentPolicyRequest
+   */
+  account?: SegmentAccountPolicyRequest;
 }
