@@ -27,5 +27,5 @@ export interface AddLocaleRequest {
    * @type {string}
    * @memberof AddLocaleRequest
    */
-  fileId?: string;
+  iconFileId?: string;
 }
