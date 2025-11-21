@@ -1,13 +1,13 @@
 /**
- *
+ * Request to link a character to an existing session
  * @export
  * @interface LinkCharacterToSessionRequest
  */
 export interface LinkCharacterToSessionRequest {
   /**
-   * Character ID to link to the session. It is required to link a character to the session.
+   * ID of the character to link to the session
    * @type {string}
    * @memberof LinkCharacterToSessionRequest
    */
-  characterId: string | null;
+  characterId: string;
 }

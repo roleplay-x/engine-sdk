@@ -1,11 +1,11 @@
 /**
- *
+ * Request to authorize an existing session with an access token
  * @export
  * @interface AuthorizeSessionRequest
  */
 export interface AuthorizeSessionRequest {
   /**
-   * Access token of the user. It is required to authorize the session.
+   * Access token of the user to authorize the session
    * @type {string}
    * @memberof AuthorizeSessionRequest
    */

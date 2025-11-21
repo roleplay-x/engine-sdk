@@ -1,13 +1,13 @@
 /**
- *
+ * Request to start a new session
  * @export
  * @interface StartSessionRequest
  */
 export interface StartSessionRequest {
   /**
-   * Ip address of the user. It is required to start a session.
+   * IP address of the user connecting to the server
    * @type {string}
    * @memberof StartSessionRequest
    */
-  ipAddress: string | null;
+  ipAddress: string;
 }

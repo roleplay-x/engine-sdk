@@ -1,3 +1,8 @@
+/**
+ * Access policy codes that can be granted to accounts
+ * @export
+ * @enum {string}
+ */
 export enum AccessPolicy {
   ScpAccess = 'account_policy:scp_access',
   ConfigurationRead = 'account_policy:read:configuration',
