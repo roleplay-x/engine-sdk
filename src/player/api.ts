@@ -2,12 +2,18 @@ import { ApiOptions, EngineClient } from '../core/engine-client';
 import { ChangeMyPasswordRequest } from './models/change-my-password-request';
 import { Character } from '../character/models/character';
 import { CharacterSummary } from '../character/models/character-summary';
+import { CharacterAnimation } from '../character/models/character-animation';
+import { CharacterAnimationCategory } from '../character/models/character-animation-category';
 import { AccountSummary } from '../account/models/account-summary';
 import { CreateMyCharacterRequest } from './models/create-my-character-request';
 import { CharacterGender } from '../character/models/character-gender';
 import { CharacterNationality } from '../character/models/character-nationality';
 import { BlueprintConfigSection } from '../blueprint/models/blueprint-config-section';
 import { SpawnLocation } from '../spawn-location/models/spawn-location';
+import { MyReferenceState } from './models/my-reference-state';
+import { UpdateMyReferenceStatesRequest } from './models/update-my-reference-states-request';
+import { PaginationQuery } from '../common/pagination-query';
+import { PaginatedItems } from '../common/paginated-items';
 
 export class PlayerApi {
   constructor(private readonly client: EngineClient) {}
@@ -183,6 +189,143 @@ export class PlayerApi {
     return this.client.get<ReadonlyArray<BlueprintConfigSection>>({
       url: 'player/blueprints/sections',
       query,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves the states for the authenticated account.<br/>This endpoint performs account-level operations. The token must be associated with an account.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get my account states
+   * @param {Object} [query] Query parameters
+   * @param {string} [query.keys] Filter by keys (comma-separated).
+   * @param {number} [query.pageIndex] Page index for pagination.
+   * @param {number} [query.pageSize] Page size for pagination.
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getMyAccountStates(
+    query?: { keys?: ReadonlyArray<string> } & PaginationQuery,
+    options?: ApiOptions,
+  ): Promise<MyReferenceState[]> {
+    return this.client.get<MyReferenceState[]>({
+      url: 'player/accounts/states',
+      query,
+      options,
+    });
+  }
+
+  /**
+   * Updates the states for the authenticated account.<br/>This endpoint performs account-level operations. The token must be associated with an account.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Update my account states
+   * @param {UpdateMyReferenceStatesRequest} request
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public updateMyAccountStates(
+    request: UpdateMyReferenceStatesRequest,
+    options?: ApiOptions,
+  ): Promise<void> {
+    return this.client.put<UpdateMyReferenceStatesRequest, void>({
+      url: 'player/accounts/states',
+      data: request,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves the states for the authenticated character.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get my character states
+   * @param {Object} [query] Query parameters
+   * @param {ReadonlyArray<string>} [query.keys] Filter by keys (comma-separated).
+   * @param {number} [query.pageIndex] Page index for pagination.
+   * @param {number} [query.pageSize] Page size for pagination.
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getMyCharacterStates(
+    query?: { keys?: ReadonlyArray<string> } & PaginationQuery,
+    options?: ApiOptions,
+  ): Promise<MyReferenceState[]> {
+    return this.client.get<MyReferenceState[]>({
+      url: 'player/characters/states',
+      query,
+      options,
+    });
+  }
+
+  /**
+   * Updates the states for the authenticated character.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Update my character states
+   * @param {UpdateMyReferenceStatesRequest} request
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public updateMyCharacterStates(
+    request: UpdateMyReferenceStatesRequest,
+    options?: ApiOptions,
+  ): Promise<void> {
+    return this.client.put<UpdateMyReferenceStatesRequest, void>({
+      url: 'player/characters/states',
+      data: request,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves paginated animations for the currently selected character.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get my animations
+   * @param {Object} [query] Query parameters
+   * @param {string} [query.animationCategoryId] Filter by animation category ID.
+   * @param {string} [query.key] Filter by animation key.
+   * @param {string} [query.keyIn] Filter by animation keys (comma-separated).
+   * @param {string} [query.ids] Filter by animation IDs (comma-separated).
+   * @param {number} [query.pageIndex] Page index for pagination.
+   * @param {number} [query.pageSize] Page size for pagination.
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getMyAnimations(
+    query?: {
+      animationCategoryId?: string;
+      key?: string;
+      keyIn?: string;
+      ids?: string;
+    } & PaginationQuery,
+    options?: ApiOptions,
+  ): Promise<PaginatedItems<CharacterAnimation>> {
+    return this.client.get<PaginatedItems<CharacterAnimation>>({
+      url: 'player/characters/animations',
+      query,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves a specific animation by ID for the currently selected character.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get my animation by ID
+   * @param {string} animationId Animation ID
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getMyAnimationById(
+    animationId: string,
+    options?: ApiOptions,
+  ): Promise<CharacterAnimation> {
+    return this.client.get<CharacterAnimation>({
+      url: `player/characters/animations/${animationId}`,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves animation categories for the currently selected character.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get my animation categories
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getMyAnimationCategories(options?: ApiOptions): Promise<CharacterAnimationCategory[]> {
+    return this.client.get<CharacterAnimationCategory[]>({
+      url: 'player/characters/animation-categories',
       options,
     });
   }

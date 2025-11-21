@@ -11,6 +11,9 @@ import { Character } from './models/character';
 import { CharacterSummary } from './models/character-summary';
 import { PaginatedItems } from '../common/paginated-items';
 import { SpawnLocation } from '../spawn-location/models/spawn-location';
+import { CharacterAnimation } from './models/character-animation';
+import { CharacterAnimationCategory } from './models/character-animation-category';
+import { PaginationQuery } from '../common/pagination-query';
 
 export class CharacterApi {
   constructor(private readonly client: EngineClient) {}
@@ -407,6 +410,71 @@ export class CharacterApi {
   public deactivateCharacter(characterId: string, options?: ApiOptions): Promise<void> {
     return this.client.put<void, void>({
       url: `characters/${characterId}/deactivated`,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves animations for a character<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:character<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:character<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get character animations
+   * @param {string} characterId
+   * @param {Object} [query] Query parameters
+   * @param {string} [query.animationCategoryId] Filter by animation category ID.
+   * @param {string} [query.key] Filter by animation key.
+   * @param {string} [query.keyIn] Filter by animation keys (comma-separated).
+   * @param {string} [query.ids] Filter by animation IDs (comma-separated).
+   * @param {number} [query.pageIndex] Page index for pagination.
+   * @param {number} [query.pageSize] Page size for pagination.
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getCharacterAnimations(
+    characterId: string,
+    query?: {
+      animationCategoryId?: string;
+      key?: string;
+      keyIn?: string;
+      ids?: string;
+    } & PaginationQuery,
+    options?: ApiOptions,
+  ): Promise<PaginatedItems<CharacterAnimation>> {
+    return this.client.get<PaginatedItems<CharacterAnimation>>({
+      url: `characters/${characterId}/animations`,
+      query,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves a character animation by its unique identifier<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:character<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:character<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get character animation by ID
+   * @param {string} characterId
+   * @param {string} animationId
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getCharacterAnimationById(
+    characterId: string,
+    animationId: string,
+    options?: ApiOptions,
+  ): Promise<CharacterAnimation> {
+    return this.client.get<CharacterAnimation>({
+      url: `characters/${characterId}/animations/${animationId}`,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves all character animation categories<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:configuration<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:configuration<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get character animation categories
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getCharacterAnimationCategories(
+    options?: ApiOptions,
+  ): Promise<CharacterAnimationCategory[]> {
+    return this.client.get<CharacterAnimationCategory[]>({
+      url: 'characters/animation-categories',
       options,
     });
   }

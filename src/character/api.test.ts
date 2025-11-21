@@ -13,6 +13,8 @@ import { CharacterSummary } from './models/character-summary';
 import { ApiKeyAuthorization } from '../auth/api-key-authorization';
 import { withCommonHeaders } from '../../test/utils/nock-helpers';
 import { PaginatedItems } from '../common/paginated-items';
+import { CharacterAnimation } from './models/character-animation';
+import { CharacterAnimationCategory } from './models/character-animation-category';
 
 describe('CharacterApi', () => {
   const apiUrl = 'http://mock-api';
@@ -542,6 +544,98 @@ describe('CharacterApi', () => {
       baseScope.put(`/characters/${id}/deactivated`).reply(204);
 
       await api.deactivateCharacter(id);
+    });
+  });
+
+  describe('getCharacterAnimations()', () => {
+    const characterId = 'char1';
+    const mockAnimations: CharacterAnimation[] = [
+      {
+        id: 'anim1',
+        name: 'Walk',
+        duration: 1000,
+        attributes: { loop: 'true' },
+        order: 1,
+      },
+      {
+        id: 'anim2',
+        name: 'Run',
+        duration: 500,
+        attributes: { loop: 'true' },
+        order: 2,
+      },
+    ];
+
+    const mockPaginatedResult: PaginatedItems<CharacterAnimation> = {
+      pageIndex: 0,
+      pageSize: 10,
+      pageCount: 1,
+      totalCount: 2,
+      items: mockAnimations,
+    };
+
+    it('should GET /characters/:id/animations without query', async () => {
+      baseScope.get(`/characters/${characterId}/animations`).reply(200, mockPaginatedResult);
+
+      const result = await api.getCharacterAnimations(characterId);
+      expect(result).toEqual(mockPaginatedResult);
+    });
+
+    it('should include query params when provided', async () => {
+      const query = {
+        animationCategoryId: 'cat1',
+        key: 'walk',
+        pageIndex: 0,
+        pageSize: 10,
+      };
+
+      baseScope
+        .get(`/characters/${characterId}/animations`)
+        .query({
+          animationCategoryId: 'cat1',
+          key: 'walk',
+          pageIndex: '0',
+          pageSize: '10',
+        })
+        .reply(200, mockPaginatedResult);
+
+      const result = await api.getCharacterAnimations(characterId, query);
+      expect(result).toEqual(mockPaginatedResult);
+    });
+  });
+
+  describe('getCharacterAnimationById()', () => {
+    const characterId = 'char1';
+    const animationId = 'anim1';
+    const mockAnimation: CharacterAnimation = {
+      id: animationId,
+      name: 'Walk',
+      duration: 1000,
+      attributes: { loop: 'true' },
+      order: 1,
+    };
+
+    it('should GET /characters/:id/animations/:animationId', async () => {
+      baseScope
+        .get(`/characters/${characterId}/animations/${animationId}`)
+        .reply(200, mockAnimation);
+
+      const result = await api.getCharacterAnimationById(characterId, animationId);
+      expect(result).toEqual(mockAnimation);
+    });
+  });
+
+  describe('getCharacterAnimationCategories()', () => {
+    const mockCategories: CharacterAnimationCategory[] = [
+      { id: 'cat1', name: 'Movement', order: 1 },
+      { id: 'cat2', name: 'Combat', order: 2 },
+    ];
+
+    it('should GET /characters/animation-categories', async () => {
+      baseScope.get('/characters/animation-categories').reply(200, mockCategories);
+
+      const result = await api.getCharacterAnimationCategories();
+      expect(result).toEqual(mockCategories);
     });
   });
 });

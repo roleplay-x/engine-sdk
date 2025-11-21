@@ -13,6 +13,8 @@ import { CharacterNationality } from '../character/models/character-nationality'
 import { BlueprintConfigSection } from '../blueprint/models/blueprint-config-section';
 import { BlueprintConfigCategory } from '../blueprint/models/blueprint-config';
 import { SpawnLocation } from '../spawn-location/models/spawn-location';
+import { MyReferenceState } from './models/my-reference-state';
+import { UpdateMyReferenceStatesRequest } from './models/update-my-reference-states-request';
 
 describe('PlayerApi', () => {
   const apiUrl = 'http://mock-api';
@@ -569,6 +571,161 @@ describe('PlayerApi', () => {
       const result = await api.getBlueprintSections();
 
       expect(result).toEqual(emptySections);
+    });
+  });
+
+  describe('getMyAccountStates()', () => {
+    const mockStates: MyReferenceState[] = [
+      { key: 'settings', value: { theme: 'dark' } },
+      { key: 'preferences', value: { notifications: true } },
+    ];
+
+    it('should GET /player/accounts/states without query', async () => {
+      baseScope.get('/player/accounts/states').reply(200, mockStates);
+
+      const result = await api.getMyAccountStates();
+      expect(result).toEqual(mockStates);
+    });
+
+    it('should include query params when provided', async () => {
+      baseScope.get('/player/accounts/states').query(true).reply(200, mockStates);
+
+      const result = await api.getMyAccountStates({
+        keys: ['settings', 'preferences'],
+        pageIndex: 0,
+        pageSize: 10,
+      });
+      expect(result).toEqual(mockStates);
+    });
+  });
+
+  describe('updateMyAccountStates()', () => {
+    it('should PUT /player/accounts/states with correct body', async () => {
+      const req: UpdateMyReferenceStatesRequest = {
+        states: [{ key: 'settings', value: { theme: 'light' } }],
+      };
+
+      baseScope
+        .put('/player/accounts/states', (body) => {
+          expect(body).toEqual(req);
+          return true;
+        })
+        .reply(204);
+
+      await api.updateMyAccountStates(req);
+    });
+  });
+
+  describe('getMyCharacterStates()', () => {
+    const mockStates: MyReferenceState[] = [
+      { key: 'inventory', value: { slots: 10 } },
+      { key: 'position', value: { x: 100, y: 200 } },
+    ];
+
+    it('should GET /player/characters/states without query', async () => {
+      baseScope.get('/player/characters/states').reply(200, mockStates);
+
+      const result = await api.getMyCharacterStates();
+      expect(result).toEqual(mockStates);
+    });
+
+    it('should include query params when provided', async () => {
+      baseScope.get('/player/characters/states').query(true).reply(200, mockStates);
+
+      const result = await api.getMyCharacterStates({
+        keys: ['inventory'],
+        pageIndex: 0,
+        pageSize: 10,
+      });
+      expect(result).toEqual(mockStates);
+    });
+  });
+
+  describe('updateMyCharacterStates()', () => {
+    it('should PUT /player/characters/states with correct body', async () => {
+      const req: UpdateMyReferenceStatesRequest = {
+        states: [{ key: 'position', value: { x: 150, y: 250 } }],
+      };
+
+      baseScope
+        .put('/player/characters/states', (body) => {
+          expect(body).toEqual(req);
+          return true;
+        })
+        .reply(204);
+
+      await api.updateMyCharacterStates(req);
+    });
+  });
+
+  describe('getMyAnimations()', () => {
+    const mockAnimation = {
+      id: 'anim-1',
+      name: 'Wave',
+      duration: 1500,
+      attributes: { type: 'greeting' },
+      order: 1,
+    };
+
+    const paginatedResult = {
+      pageIndex: 0,
+      pageSize: 20,
+      pageCount: 1,
+      totalCount: 1,
+      items: [mockAnimation],
+    };
+
+    it('should GET /player/characters/animations without query', async () => {
+      baseScope.get('/player/characters/animations').reply(200, paginatedResult);
+
+      const result = await api.getMyAnimations();
+      expect(result).toEqual(paginatedResult);
+    });
+
+    it('should include query params when provided', async () => {
+      baseScope
+        .get('/player/characters/animations')
+        .query({ animationCategoryId: 'cat-1', key: 'wave', pageIndex: '0', pageSize: '10' })
+        .reply(200, paginatedResult);
+
+      const result = await api.getMyAnimations({
+        animationCategoryId: 'cat-1',
+        key: 'wave',
+        pageIndex: 0,
+        pageSize: 10,
+      });
+      expect(result).toEqual(paginatedResult);
+    });
+  });
+
+  describe('getMyAnimationById()', () => {
+    const mockAnimation = {
+      id: 'anim-1',
+      name: 'Wave',
+      duration: 1500,
+      attributes: { type: 'greeting' },
+      order: 1,
+    };
+
+    it('should GET /player/characters/animations/{animationId}', async () => {
+      baseScope.get('/player/characters/animations/anim-1').reply(200, mockAnimation);
+
+      const result = await api.getMyAnimationById('anim-1');
+      expect(result).toEqual(mockAnimation);
+    });
+  });
+
+  describe('getMyAnimationCategories()', () => {
+    const mockCategories = [
+      { id: 'cat-1', name: 'Greetings', order: 1 },
+      { id: 'cat-2', name: 'Dances', order: 2 },
+    ];
+
+    it('should GET /player/characters/animation-categories', async () => {
+      baseScope.get('/player/characters/animation-categories').reply(200, mockCategories);
+
+      const result = await api.getMyAnimationCategories();
+      expect(result).toEqual(mockCategories);
     });
   });
 });

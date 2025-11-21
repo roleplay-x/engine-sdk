@@ -12,6 +12,8 @@ import { SegmentTypeCode } from '../segment/models/segment-type';
 import { Metric } from '../metric/models/metric';
 import { MetricValueType } from '../metric/models/metric-value-type';
 import { MetricMainKey } from '../metric/models/metric-main-key';
+import { ReferenceState } from './models/reference-state';
+import { UpdateReferenceStatesRequest } from './models/update-reference-states-request';
 
 describe('ReferenceApi', () => {
   const apiUrl = 'http://mock-api';
@@ -299,6 +301,89 @@ describe('ReferenceApi', () => {
         .reply(204);
 
       await api.removeSegmentFromReference(categoryReferenceId, segmentDefinitionId);
+    });
+  });
+
+  describe('getReferenceStates()', () => {
+    const mockStates: ReferenceState[] = [
+      {
+        id: 'state1',
+        category: 'CHARACTER',
+        categoryReferenceId: 'char:123',
+        type: 'SERVER',
+        key: 'health',
+        value: 100,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+      {
+        id: 'state2',
+        category: 'CHARACTER',
+        categoryReferenceId: 'char:123',
+        type: 'CLIENT',
+        key: 'settings',
+        value: { volume: 0.8 },
+        createdDate: 1610000002000,
+        lastModifiedDate: 1610000003000,
+      },
+    ];
+
+    const mockPaginatedResult: PaginatedItems<ReferenceState> = {
+      pageIndex: 0,
+      pageSize: 10,
+      pageCount: 1,
+      totalCount: 2,
+      items: mockStates,
+    };
+
+    it('should GET /references/states without query', async () => {
+      baseScope.get('/references/states').reply(200, mockPaginatedResult);
+
+      const result = await api.getReferenceStates();
+      expect(result).toEqual(mockPaginatedResult);
+    });
+
+    it('should include query params when provided', async () => {
+      const query = {
+        categoryReferenceId: 'char:123',
+        type: 'SERVER',
+        pageIndex: 0,
+        pageSize: 10,
+      };
+
+      baseScope
+        .get('/references/states')
+        .query({
+          categoryReferenceId: 'char:123',
+          type: 'SERVER',
+          pageIndex: '0',
+          pageSize: '10',
+        })
+        .reply(200, mockPaginatedResult);
+
+      const result = await api.getReferenceStates(query);
+      expect(result).toEqual(mockPaginatedResult);
+    });
+  });
+
+  describe('updateReferenceStates()', () => {
+    it('should PUT /references/:id/states with correct body', async () => {
+      const categoryReferenceId = 'char:123';
+      const req: UpdateReferenceStatesRequest = {
+        states: [
+          { type: 'SERVER', key: 'health', value: 100 },
+          { type: 'CLIENT', key: 'settings', value: { volume: 0.8 } },
+        ],
+      };
+
+      baseScope
+        .put(`/references/${categoryReferenceId}/states`, (body) => {
+          expect(body).toEqual(req);
+          return true;
+        })
+        .reply(204);
+
+      await api.updateReferenceStates(categoryReferenceId, req);
     });
   });
 });

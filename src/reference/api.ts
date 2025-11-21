@@ -6,6 +6,8 @@ import { PaginationQuery } from '../common/pagination-query';
 import { Segment } from '../segment/models/segment';
 import { ApplySegmentToReferenceRequest } from '../segment/models/apply-segment-to-reference-request';
 import { Metric } from '../metric/models/metric';
+import { ReferenceState } from './models/reference-state';
+import { UpdateReferenceStatesRequest } from './models/update-reference-states-request';
 
 export class ReferenceApi {
   constructor(private readonly client: EngineClient) {}
@@ -145,6 +147,55 @@ export class ReferenceApi {
   ): Promise<void> {
     return this.client.delete<void>({
       url: `references/${categoryReferenceId}/segments/${segmentDefinitionId}`,
+      options,
+    });
+  }
+
+  /**
+   * Retrieves reference states based on the provided filters.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key]<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get reference states
+   * @param {Object} [query] Query parameters
+   * @param {string} [query.categoryReferenceId] Filter by category reference ID.
+   * @param {string} [query.category] Filter by category.
+   * @param {string} [query.type] Filter by state type (SERVER or CLIENT).
+   * @param {ReadonlyArray<string>} [query.keys] Filter by keys.
+   * @param {number} [query.pageIndex] Page index for pagination.
+   * @param {number} [query.pageSize] Page size for pagination.
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getReferenceStates(
+    query?: {
+      categoryReferenceId?: string;
+      category?: string;
+      type?: string;
+      keys?: ReadonlyArray<string>;
+    } & PaginationQuery,
+    options?: ApiOptions,
+  ): Promise<PaginatedItems<ReferenceState>> {
+    return this.client.get<PaginatedItems<ReferenceState>>({
+      url: 'references/states',
+      query,
+      options,
+    });
+  }
+
+  /**
+   * Updates the states for a reference.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key]<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Update reference states
+   * @param {string} categoryReferenceId
+   * @param {UpdateReferenceStatesRequest} request
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public updateReferenceStates(
+    categoryReferenceId: string,
+    request: UpdateReferenceStatesRequest,
+    options?: ApiOptions,
+  ): Promise<void> {
+    return this.client.put<UpdateReferenceStatesRequest, void>({
+      url: `references/${categoryReferenceId}/states`,
+      data: request,
       options,
     });
   }
