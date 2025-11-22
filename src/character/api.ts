@@ -421,8 +421,8 @@ export class CharacterApi {
    * @param {Object} [query] Query parameters
    * @param {string} [query.animationCategoryId] Filter by animation category ID.
    * @param {string} [query.key] Filter by animation key.
-   * @param {string} [query.keyIn] Filter by animation keys (comma-separated).
-   * @param {string} [query.ids] Filter by animation IDs (comma-separated).
+   * @param {string} [query.keyIn] Filter by animation keys.
+   * @param {ReadonlyArray<string>} [query.ids] Filter by animation IDs.
    * @param {number} [query.pageIndex] Page index for pagination.
    * @param {number} [query.pageSize] Page size for pagination.
    * @param {*} [options] Override http request option.
@@ -434,7 +434,7 @@ export class CharacterApi {
       animationCategoryId?: string;
       key?: string;
       keyIn?: string;
-      ids?: string;
+      ids?: ReadonlyArray<string>;
     } & PaginationQuery,
     options?: ApiOptions,
   ): Promise<PaginatedItems<CharacterAnimation>> {
