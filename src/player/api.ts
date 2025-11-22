@@ -289,7 +289,7 @@ export class PlayerApi {
       animationCategoryId?: string;
       key?: string;
       keyIn?: string;
-      ids?: string;
+      ids?: ReadonlyArray<string>;
     } & PaginationQuery,
     options?: ApiOptions,
   ): Promise<PaginatedItems<CharacterAnimation>> {
