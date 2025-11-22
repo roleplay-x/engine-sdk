@@ -8,6 +8,11 @@ export interface CharacterAnimation {
   id: string;
 
   /**
+   * Optional key used to reference this animation in game scripts and configurations.
+   */
+  key?: string;
+
+  /**
    * Display name of the animation shown in the UI.
    */
   name: string;
