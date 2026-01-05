@@ -157,6 +157,7 @@ export class SegmentApi {
   ): Promise<AccessPolicyGroup[]> {
     return this.client.get<AccessPolicyGroup[]>({
       url: `segments/access-policies`,
+      query: { category },
       options,
     });
   }

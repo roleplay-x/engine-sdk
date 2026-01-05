@@ -268,7 +268,7 @@ describe('SegmentApi', () => {
   });
 
   describe('getAccessPolicies()', () => {
-    it('should GET /segments/access-policies ignoring category parameter', async () => {
+    it('should GET /segments/access-policies with category parameter', async () => {
       const mockPolicies: AccessPolicyGroup[] = [
         {
           name: 'group1',
@@ -278,7 +278,10 @@ describe('SegmentApi', () => {
         } as AccessPolicyGroup,
       ];
 
-      baseScope.get('/segments/access-policies').reply(200, mockPolicies);
+      baseScope
+        .get('/segments/access-policies')
+        .query({ category: 'ACCOUNT' })
+        .reply(200, mockPolicies);
 
       const result = await api.getAccessPolicies(ReferenceCategory.Account);
       expect(result).toEqual(mockPolicies);

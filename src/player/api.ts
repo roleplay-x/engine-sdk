@@ -12,8 +12,15 @@ import { BlueprintConfigSection } from '../blueprint/models/blueprint-config-sec
 import { SpawnLocation } from '../spawn-location/models/spawn-location';
 import { MyReferenceState } from './models/my-reference-state';
 import { UpdateMyReferenceStatesRequest } from './models/update-my-reference-states-request';
+import { WithdrawRequest } from './models/withdraw-request';
 import { PaginationQuery } from '../common/pagination-query';
 import { PaginatedItems } from '../common/paginated-items';
+import { ItemCategory } from '../inventory/models/item-category';
+import { AmmoType } from '../inventory/models/ammo-type';
+import { AttachmentPoint } from '../inventory/models/attachment-point';
+import { EquipmentSlot } from '../inventory/models/equipment-slot';
+import { Currency } from '../ledger/models/currency';
+import { LedgerAccount } from '../ledger/models/ledger-account';
 
 export class PlayerApi {
   constructor(private readonly client: EngineClient) {}
@@ -326,6 +333,102 @@ export class PlayerApi {
   public getMyAnimationCategories(options?: ApiOptions): Promise<CharacterAnimationCategory[]> {
     return this.client.get<CharacterAnimationCategory[]>({
       url: 'player/characters/animation-categories',
+      options,
+    });
+  }
+
+  /**
+   * Retrieves all enabled item categories for the player.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get player item categories
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getItemCategories(options?: ApiOptions): Promise<ItemCategory[]> {
+    return this.client.get<ItemCategory[]>({
+      url: 'player/item-categories',
+      options,
+    });
+  }
+
+  /**
+   * Retrieves all enabled currencies for the player.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get player currencies
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getCurrencies(options?: ApiOptions): Promise<Currency[]> {
+    return this.client.get<Currency[]>({
+      url: 'player/currencies',
+      options,
+    });
+  }
+
+  /**
+   * Retrieves all enabled ammo types for the player.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get player ammo types
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getAmmoTypes(options?: ApiOptions): Promise<AmmoType[]> {
+    return this.client.get<AmmoType[]>({
+      url: 'player/ammo-types',
+      options,
+    });
+  }
+
+  /**
+   * Retrieves all enabled attachment points for the player.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get player attachment points
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getAttachmentPoints(options?: ApiOptions): Promise<AttachmentPoint[]> {
+    return this.client.get<AttachmentPoint[]>({
+      url: 'player/attachment-points',
+      options,
+    });
+  }
+
+  /**
+   * Retrieves all enabled equipment slots for the player.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get player equipment slots
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getEquipmentSlots(options?: ApiOptions): Promise<EquipmentSlot[]> {
+    return this.client.get<EquipmentSlot[]>({
+      url: 'player/equipment-slots',
+      options,
+    });
+  }
+
+  /**
+   * Retrieves the ledger account for the currently selected character.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Get my ledger account
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public getMyLedgerAccount(options?: ApiOptions): Promise<LedgerAccount> {
+    return this.client.get<LedgerAccount>({
+      url: 'player/characters/ledger-accounts',
+      options,
+    });
+  }
+
+  /**
+   * Withdraws currency from the currently selected character's ledger account.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
+   * @summary Withdraw from my ledger account
+   * @param {WithdrawRequest} request The withdrawal request
+   * @param {*} [options] Override http request option.
+   * @throws {EngineError}
+   */
+  public withdrawFromMyLedgerAccount(
+    request: WithdrawRequest,
+    options?: ApiOptions,
+  ): Promise<void> {
+    return this.client.post<WithdrawRequest, void>({
+      url: 'player/characters/ledger-accounts/withdrawals',
+      data: request,
       options,
     });
   }

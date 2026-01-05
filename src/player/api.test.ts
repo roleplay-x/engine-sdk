@@ -15,6 +15,13 @@ import { BlueprintConfigCategory } from '../blueprint/models/blueprint-config';
 import { SpawnLocation } from '../spawn-location/models/spawn-location';
 import { MyReferenceState } from './models/my-reference-state';
 import { UpdateMyReferenceStatesRequest } from './models/update-my-reference-states-request';
+import { ItemCategory } from '../inventory/models/item-category';
+import { AmmoType } from '../inventory/models/ammo-type';
+import { AttachmentPoint } from '../inventory/models/attachment-point';
+import { EquipmentSlot } from '../inventory/models/equipment-slot';
+import { Currency } from '../ledger/models/currency';
+import { LedgerAccount } from '../ledger/models/ledger-account';
+import { WithdrawRequest } from './models/withdraw-request';
 
 describe('PlayerApi', () => {
   const apiUrl = 'http://mock-api';
@@ -726,6 +733,274 @@ describe('PlayerApi', () => {
 
       const result = await api.getMyAnimationCategories();
       expect(result).toEqual(mockCategories);
+    });
+  });
+
+  describe('getItemCategories()', () => {
+    const mockCategories: ItemCategory[] = [
+      {
+        id: 'WEAPONS',
+        name: 'Weapons',
+        enabled: true,
+        order: 1,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+      {
+        id: 'ARMOR',
+        name: 'Armor',
+        enabled: true,
+        order: 2,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+    ];
+
+    it('should GET /player/item-categories and return ItemCategory array', async () => {
+      baseScope.get('/player/item-categories').reply(200, mockCategories);
+
+      const result = await api.getItemCategories();
+      expect(result).toEqual(mockCategories);
+    });
+
+    it('should handle empty categories list', async () => {
+      baseScope.get('/player/item-categories').reply(200, []);
+
+      const result = await api.getItemCategories();
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('getCurrencies()', () => {
+    const mockCurrencies: Currency[] = [
+      {
+        id: 'USD',
+        name: 'US Dollar',
+        symbol: '$',
+        textFormat: '{symbol}{amount}',
+        itemDefinitionId: 'CASH_USD',
+        enabled: true,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+      {
+        id: 'GOLD',
+        name: 'Gold',
+        symbol: 'G',
+        textFormat: '{amount}{symbol}',
+        itemDefinitionId: 'GOLD_COIN',
+        enabled: true,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+    ];
+
+    it('should GET /player/currencies and return Currency array', async () => {
+      baseScope.get('/player/currencies').reply(200, mockCurrencies);
+
+      const result = await api.getCurrencies();
+      expect(result).toEqual(mockCurrencies);
+    });
+
+    it('should handle empty currencies list', async () => {
+      baseScope.get('/player/currencies').reply(200, []);
+
+      const result = await api.getCurrencies();
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('getAmmoTypes()', () => {
+    const mockAmmoTypes: AmmoType[] = [
+      {
+        id: '9MM',
+        name: '9mm Rounds',
+        enabled: true,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+      {
+        id: '5.56',
+        name: '5.56mm NATO',
+        enabled: true,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+    ];
+
+    it('should GET /player/ammo-types and return AmmoType array', async () => {
+      baseScope.get('/player/ammo-types').reply(200, mockAmmoTypes);
+
+      const result = await api.getAmmoTypes();
+      expect(result).toEqual(mockAmmoTypes);
+    });
+
+    it('should handle empty ammo types list', async () => {
+      baseScope.get('/player/ammo-types').reply(200, []);
+
+      const result = await api.getAmmoTypes();
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('getAttachmentPoints()', () => {
+    const mockPoints: AttachmentPoint[] = [
+      {
+        id: 'SCOPE_MOUNT',
+        name: 'Scope Mount',
+        enabled: true,
+        order: 1,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+      {
+        id: 'BARREL',
+        name: 'Barrel',
+        enabled: true,
+        order: 2,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+    ];
+
+    it('should GET /player/attachment-points and return AttachmentPoint array', async () => {
+      baseScope.get('/player/attachment-points').reply(200, mockPoints);
+
+      const result = await api.getAttachmentPoints();
+      expect(result).toEqual(mockPoints);
+    });
+
+    it('should handle empty attachment points list', async () => {
+      baseScope.get('/player/attachment-points').reply(200, []);
+
+      const result = await api.getAttachmentPoints();
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('getEquipmentSlots()', () => {
+    const mockSlots: EquipmentSlot[] = [
+      {
+        id: 'PRIMARY_WEAPON',
+        name: 'Primary Weapon',
+        target: 'CHARACTER',
+        targetName: 'Character',
+        category: 'WEAPON',
+        categoryName: 'Weapon',
+        visible: true,
+        enabled: true,
+        order: 1,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+      {
+        id: 'SECONDARY_WEAPON',
+        name: 'Secondary Weapon',
+        target: 'CHARACTER',
+        targetName: 'Character',
+        category: 'WEAPON',
+        categoryName: 'Weapon',
+        visible: true,
+        enabled: true,
+        order: 2,
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      },
+    ];
+
+    it('should GET /player/equipment-slots and return EquipmentSlot array', async () => {
+      baseScope.get('/player/equipment-slots').reply(200, mockSlots);
+
+      const result = await api.getEquipmentSlots();
+      expect(result).toEqual(mockSlots);
+    });
+
+    it('should handle empty equipment slots list', async () => {
+      baseScope.get('/player/equipment-slots').reply(200, []);
+
+      const result = await api.getEquipmentSlots();
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('getMyLedgerAccount()', () => {
+    const mockAccount: LedgerAccount = {
+      id: 'acc-123',
+      owner: {
+        category: 'CHARACTER',
+        referenceId: 'char-123',
+      },
+      balances: [
+        {
+          currencyId: 'USD',
+          currencyName: 'US Dollar',
+          amount: 1000,
+          formattedAmount: '$1,000.00',
+        },
+        { currencyId: 'GOLD', currencyName: 'Gold', amount: 500, formattedAmount: '500G' },
+      ],
+      createdDate: 1610000000000,
+      lastModifiedDate: 1610000001000,
+    };
+
+    it('should GET /player/characters/ledger-accounts and return LedgerAccount', async () => {
+      baseScope.get('/player/characters/ledger-accounts').reply(200, mockAccount);
+
+      const result = await api.getMyLedgerAccount();
+      expect(result).toEqual(mockAccount);
+    });
+
+    it('should handle account with empty balances', async () => {
+      const emptyAccount: LedgerAccount = {
+        id: 'acc-456',
+        owner: {
+          category: 'CHARACTER',
+          referenceId: 'char-456',
+        },
+        balances: [],
+        createdDate: 1610000000000,
+        lastModifiedDate: 1610000001000,
+      };
+
+      baseScope.get('/player/characters/ledger-accounts').reply(200, emptyAccount);
+
+      const result = await api.getMyLedgerAccount();
+      expect(result).toEqual(emptyAccount);
+    });
+  });
+
+  describe('withdrawFromMyLedgerAccount()', () => {
+    it('should POST /player/characters/ledger-accounts/withdrawals', async () => {
+      const req: WithdrawRequest = {
+        currencyId: 'USD',
+        amount: 100,
+      };
+
+      baseScope
+        .post('/player/characters/ledger-accounts/withdrawals', (body) => {
+          expect(body).toEqual(req);
+          return true;
+        })
+        .reply(204);
+
+      await api.withdrawFromMyLedgerAccount(req);
+    });
+
+    it('should handle withdrawal with targetLocationId', async () => {
+      const req: WithdrawRequest = {
+        currencyId: 'GOLD',
+        amount: 50,
+        targetLocationId: 'CONTAINER:chest-123',
+      };
+
+      baseScope
+        .post('/player/characters/ledger-accounts/withdrawals', (body) => {
+          expect(body).toEqual(req);
+          return true;
+        })
+        .reply(204);
+
+      await api.withdrawFromMyLedgerAccount(req);
     });
   });
 });

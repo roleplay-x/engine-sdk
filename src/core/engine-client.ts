@@ -8,6 +8,7 @@ export type ApiOptions = {
   correlationId?: string;
   characterId?: string;
   executorUser?: string;
+  locale?: string;
 };
 
 export type RequestConfigWithApiOptions = AxiosRequestConfig & ApiOptions;
@@ -33,7 +34,7 @@ export class EngineClient {
           const data = error.response.data;
           return Promise.reject(
             new EngineError(data.key, data.message, data.params, status, {
-              url: error.request.responseURL,
+              url: error.request?.responseURL,
             }),
           );
         }
@@ -168,7 +169,7 @@ export class EngineClient {
       });
     }
 
-    headers.set('Accept-Language', this.configs.locale);
+    headers.set('Accept-Language', cfg.locale ?? this.configs.locale);
     headers.set('x-agent-name', this.configs.applicationName);
     headers.set('x-server-id', this.configs.serverId);
     headers.set('x-correlationid', cfg.correlationId ?? uuidV4());
