@@ -935,7 +935,7 @@ describe('InventoryApi', () => {
         expect(result).toEqual(paginated);
       });
 
-      it('should pass query parameters', async () => {
+      it('should pass query parameters with arrays', async () => {
         const paginated: PaginatedItems<Item> = {
           pageIndex: 0,
           pageSize: 10,
@@ -955,8 +955,8 @@ describe('InventoryApi', () => {
           .reply(200, paginated);
 
         const result = await api.getItems({
-          ids: 'item-123,item-456',
-          locationIds: 'loc-1,loc-2',
+          ids: ['item-123', 'item-456'],
+          locationIds: ['loc-1', 'loc-2'],
           pageIndex: 0,
           pageSize: 10,
         });

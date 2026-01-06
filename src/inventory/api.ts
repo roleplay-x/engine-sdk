@@ -938,20 +938,20 @@ export class InventoryApi {
   /**
    * Returns a paginated list of items based on the provided filters.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:inventory<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:inventory<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
    * @summary Get items
-   * @param {Object} [query]                   Query parameters.
-   * @param {string} [query.ids]               Comma-separated item IDs.
-   * @param {string} [query.locationIds]       Comma-separated location IDs.
-   * @param {string} [query.itemDefinitionIds] Comma-separated item definition IDs.
-   * @param {number} [query.pageIndex]         Page index for pagination (1-based).
-   * @param {number} [query.pageSize]          Number of items per page.
+   * @param {Object} [query]                             Query parameters.
+   * @param {ReadonlyArray<string>} [query.ids]          Filter by item IDs.
+   * @param {ReadonlyArray<string>} [query.locationIds]  Filter by location IDs.
+   * @param {ReadonlyArray<string>} [query.itemDefinitionIds] Filter by item definition IDs.
+   * @param {number} [query.pageIndex]                   Page index for pagination (1-based).
+   * @param {number} [query.pageSize]                    Number of items per page.
    * @param {ApiOptions} [options] Override http request options.
    * @throws {EngineError}
    */
   public getItems(
     query?: {
-      ids?: string;
-      locationIds?: string;
-      itemDefinitionIds?: string;
+      ids?: ReadonlyArray<string>;
+      locationIds?: ReadonlyArray<string>;
+      itemDefinitionIds?: ReadonlyArray<string>;
       pageIndex?: number;
       pageSize?: number;
     },

@@ -32,6 +32,11 @@ export interface TemplateConfigTranslation {
   description: string;
 }
 
+export interface CurrencyTranslation {
+  name: string;
+  textFormat: string;
+}
+
 export interface LocalizationData {
   errors?: {
     [key: string]: ErrorTranslation;
@@ -97,6 +102,40 @@ export interface LocalizationData {
     };
     configTypes?: {
       [key: string]: DefaultNameTranslation;
+    };
+  };
+  inventory?: {
+    materialTypes?: {
+      [key: string]: DefaultNameDescriptionTranslation;
+    };
+    effectTypes?: {
+      [key: string]: DefaultNameDescriptionTranslation;
+    };
+    equipmentSlots?: {
+      [key: string]: DefaultNameDescriptionTranslation;
+    };
+    attachmentPoints?: {
+      [key: string]: DefaultNameDescriptionTranslation;
+    };
+    ammoTypes?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    itemCategories?: {
+      [key: string]: DefaultNameDescriptionTranslation;
+    };
+    itemDefinitions?: {
+      [key: string]: DefaultNameDescriptionTranslation;
+    };
+    usableActions?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    usableStates?: {
+      [key: string]: DefaultNameTranslation;
+    };
+  };
+  ledger?: {
+    currencies?: {
+      [key: string]: CurrencyTranslation;
     };
   };
   templates?: {
