@@ -28,7 +28,6 @@ const publicConfigKeys = [
   ConfigKey.CharacterFullNameValidationPattern,
   ConfigKey.CharacterNationalityEnabled,
   ConfigKey.CharacterInGameCreationEnabled,
-  ConfigKey.MotivesSystemEnabled,
 ] as const;
 
 type PublicConfigKey = (typeof publicConfigKeys)[number];

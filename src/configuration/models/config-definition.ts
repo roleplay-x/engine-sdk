@@ -54,9 +54,6 @@ export interface ConfigDefinitionsMap {
   [ConfigKey.ExternalLoginFlowIdentifierType]: ConfigSelectOption;
   [ConfigKey.ExternalLoginFlowUseExternalInfo]: boolean;
 
-  // CHARACTER
-  [ConfigKey.MotivesSystemEnabled]: ConfigGroupToggle;
-
   // CHARACTER - GENERAL
   [ConfigKey.CharacterMinAge]: number;
   [ConfigKey.CharacterMaxAge]: number;
@@ -69,19 +66,9 @@ export interface ConfigDefinitionsMap {
   [ConfigKey.CharacterNationalityEnabled]: boolean;
   [ConfigKey.CharacterInGameCreationEnabled]: boolean;
   [ConfigKey.CharacterMaxPerAccount]: number;
-  [ConfigKey.CharacterDefaultHunger]: number;
-  [ConfigKey.CharacterDefaultThirst]: number;
-  [ConfigKey.CharacterDefaultEnergy]: number;
-  [ConfigKey.CharacterDefaultHealth]: number;
-  [ConfigKey.CharacterDefaultMood]: number;
 
-  // CHARACTER - MOTIVES THRESHOLDS
-  [ConfigKey.CharacterMotivesCriticalThreshold]: number;
-  [ConfigKey.CharacterMotivesHealthyHungerThreshold]: number;
-  [ConfigKey.CharacterMotivesHealthyThirstThreshold]: number;
-  [ConfigKey.CharacterMotivesHealthyEnergyThreshold]: number;
-  [ConfigKey.CharacterMotivesHealthyHealthThreshold]: number;
-  [ConfigKey.CharacterMotivesHealthyMoodThreshold]: number;
+  // INVENTORY
+  [ConfigKey.InventoryWorldQueryRadius]: number;
 }
 
 export type ConfigDefinitions = {

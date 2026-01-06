@@ -53,9 +53,6 @@ export enum ConfigKey {
   ExternalLoginFlowIdentifierType = 'EXTERNAL_LOGIN_FLOW_IDENTIFIER_TYPE',
   ExternalLoginFlowUseExternalInfo = 'EXTERNAL_LOGIN_FLOW_USE_EXTERNAL_INFO',
 
-  // CHARACTER
-  MotivesSystemEnabled = 'MOTIVES_SYSTEM_ENABLED',
-
   // CHARACTER - GENERAL
   CharacterMinAge = 'CHARACTER_MIN_AGE',
   CharacterMaxAge = 'CHARACTER_MAX_AGE',
@@ -69,18 +66,8 @@ export enum ConfigKey {
   CharacterInGameCreationEnabled = 'CHARACTER_IN_GAME_CREATION_ENABLED',
   CharacterMaxPerAccount = 'CHARACTER_MAX_PER_ACCOUNT',
 
-  // CHARACTER - MOTIVES THRESHOLDS
-  CharacterDefaultHunger = 'CHARACTER_DEFAULT_HUNGER',
-  CharacterDefaultThirst = 'CHARACTER_DEFAULT_THIRST',
-  CharacterDefaultEnergy = 'CHARACTER_DEFAULT_ENERGY',
-  CharacterDefaultHealth = 'CHARACTER_DEFAULT_HEALTH',
-  CharacterDefaultMood = 'CHARACTER_DEFAULT_MOOD',
-  CharacterMotivesCriticalThreshold = 'CHARACTER_MOTIVES_CRITICAL_THRESHOLD',
-  CharacterMotivesHealthyHungerThreshold = 'CHARACTER_MOTIVES_HEALTHY_HUNGER_THRESHOLD',
-  CharacterMotivesHealthyThirstThreshold = 'CHARACTER_MOTIVES_HEALTHY_THIRST_THRESHOLD',
-  CharacterMotivesHealthyEnergyThreshold = 'CHARACTER_MOTIVES_HEALTHY_ENERGY_THRESHOLD',
-  CharacterMotivesHealthyHealthThreshold = 'CHARACTER_MOTIVES_HEALTHY_HEALTH_THRESHOLD',
-  CharacterMotivesHealthyMoodThreshold = 'CHARACTER_MOTIVES_HEALTHY_MOOD_THRESHOLD',
+  // INVENTORY
+  InventoryWorldQueryRadius = 'INVENTORY_WORLD_QUERY_RADIUS',
 }
 
 export enum ConfigGroupKey {
@@ -102,7 +89,9 @@ export enum ConfigGroupKey {
 
   // CHARACTER
   Character = 'CHARACTER',
-  MotivesSystem = 'MOTIVES_SYSTEM',
+
+  // INVENTORY
+  Inventory = 'INVENTORY',
 
   // WORLD
   Screens = 'SCREENS',
@@ -179,19 +168,8 @@ export const configKeyToGroup: ConfigKeyToGroupMap = {
   CharacterInGameCreationEnabled: ConfigGroupKey.Character,
   CharacterMaxPerAccount: ConfigGroupKey.Character,
 
-  // CHARACTER - MOTIVES THRESHOLDS
-  MotivesSystemEnabled: ConfigGroupKey.MotivesSystem,
-  CharacterDefaultHunger: ConfigGroupKey.MotivesSystem,
-  CharacterDefaultThirst: ConfigGroupKey.MotivesSystem,
-  CharacterDefaultEnergy: ConfigGroupKey.MotivesSystem,
-  CharacterDefaultHealth: ConfigGroupKey.MotivesSystem,
-  CharacterDefaultMood: ConfigGroupKey.MotivesSystem,
-  CharacterMotivesCriticalThreshold: ConfigGroupKey.MotivesSystem,
-  CharacterMotivesHealthyHungerThreshold: ConfigGroupKey.MotivesSystem,
-  CharacterMotivesHealthyThirstThreshold: ConfigGroupKey.MotivesSystem,
-  CharacterMotivesHealthyEnergyThreshold: ConfigGroupKey.MotivesSystem,
-  CharacterMotivesHealthyHealthThreshold: ConfigGroupKey.MotivesSystem,
-  CharacterMotivesHealthyMoodThreshold: ConfigGroupKey.MotivesSystem,
+  // INVENTORY
+  InventoryWorldQueryRadius: ConfigGroupKey.Inventory,
 };
 
 export type ConfigGroupParentMap = {
@@ -204,6 +182,7 @@ export const configGroupParents: Record<ConfigGroupKey, ConfigGroupKey | null> =
   [ConfigGroupKey.Notification]: null,
   [ConfigGroupKey.Account]: null,
   [ConfigGroupKey.Character]: null,
+  [ConfigGroupKey.Inventory]: null,
 
   // NOTIFICATION
   [ConfigGroupKey.Smtp]: ConfigGroupKey.Notification,
@@ -223,7 +202,4 @@ export const configGroupParents: Record<ConfigGroupKey, ConfigGroupKey | null> =
   [ConfigGroupKey.DiscordLoginFlow]: ConfigGroupKey.Auth,
   [ConfigGroupKey.UsernamePasswordFlow]: ConfigGroupKey.Auth,
   [ConfigGroupKey.ExternalLoginFlow]: ConfigGroupKey.Auth,
-
-  // CHARACTER
-  [ConfigGroupKey.MotivesSystem]: ConfigGroupKey.Character,
 } as const;
