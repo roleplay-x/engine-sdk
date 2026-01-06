@@ -114,6 +114,12 @@ export interface LocalizationData {
     equipmentSlots?: {
       [key: string]: DefaultNameDescriptionTranslation;
     };
+    equipmentSlotTargets?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    equipmentSlotCategories?: {
+      [key: string]: DefaultNameTranslation;
+    };
     attachmentPoints?: {
       [key: string]: DefaultNameDescriptionTranslation;
     };
@@ -132,10 +138,34 @@ export interface LocalizationData {
     usableStates?: {
       [key: string]: DefaultNameTranslation;
     };
+    usableTargetTypes?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    componentTypes?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    weaponClasses?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    lockTypes?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    containerAccessTypes?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    keyTargetTypes?: {
+      [key: string]: DefaultNameTranslation;
+    };
+    bindingEntityTypes?: {
+      [key: string]: DefaultNameTranslation;
+    };
   };
   ledger?: {
     currencies?: {
       [key: string]: CurrencyTranslation;
+    };
+    transactionTypes?: {
+      [key: string]: DefaultNameDescriptionTranslation;
     };
   };
   templates?: {

@@ -458,7 +458,15 @@ describe('InventoryApi', () => {
     const mockMaterial: MaterialType = {
       id: 'STEEL',
       name: 'Steel',
+      description: 'A strong metal alloy',
+      iconUrl: 'https://example.com/steel.png',
+      baseUnit: 'GRAM',
+      baseWeight: 1,
+      baseVolume: 0.127,
+      baseEffects: {},
+      baseCraftTime: 60,
       enabled: true,
+      order: 1,
       createdDate: 1610000000000,
       lastModifiedDate: 1610000001000,
     };
