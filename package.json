@@ -1,6 +1,6 @@
 {
   "name": "@roleplayx/engine-sdk",
-  "version": "0.1.63",
+  "version": "0.1.64",
   "description": "RoleplayX Engine SDK",
   "main": "index.js",
   "types": "index.d.ts",

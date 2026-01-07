@@ -1,5 +1,7 @@
 import { ComponentType } from '../../enums/component-type';
 import { ComponentEffect } from './component-effect';
+import { UsableTargetType } from '../../enums/usable-target-type';
+import { UsableActionFlag } from '../../enums/usable-action-flag';
 
 /**
  * Target configuration for usable items
@@ -9,10 +11,10 @@ import { ComponentEffect } from './component-effect';
 export interface UsableTarget {
   /**
    * Target type
-   * @type {string}
+   * @type {UsableTargetType}
    * @memberof UsableTarget
    */
-  targetType: string;
+  targetType: UsableTargetType;
   /**
    * Localized name of the target type
    * @type {string}
@@ -111,10 +113,10 @@ export interface UsableActionCondition {
   blockedStates?: ReadonlyArray<string>;
   /**
    * Additional flags required
-   * @type {ReadonlyArray<string>}
+   * @type {ReadonlyArray<UsableActionFlag>}
    * @memberof UsableActionCondition
    */
-  flags?: ReadonlyArray<string>;
+  flags?: ReadonlyArray<UsableActionFlag>;
 }
 
 /**
