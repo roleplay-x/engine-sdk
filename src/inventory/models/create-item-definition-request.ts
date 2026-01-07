@@ -2,6 +2,7 @@ import { BindingRulesRequest } from './binding-rules-request';
 import { ItemMobilityRequest } from './item-mobility-request';
 import { ItemDefinitionMaterialRequest } from './item-definition-material-request';
 import { ItemComponentRequest } from './components/item-component-request';
+import { Unit } from '../enums/unit';
 
 /**
  * Request to create an item definition
@@ -40,11 +41,11 @@ export interface CreateItemDefinitionRequest {
    */
   categoryId: string;
   /**
-   * Primary unit of measurement. Valid values: UNIT, KG, L, M
-   * @type {string}
+   * Primary unit of measurement
+   * @type {Unit}
    * @memberof CreateItemDefinitionRequest
    */
-  primaryUnit: string;
+  primaryUnit: Unit;
   /**
    * Weight per unit in kilograms
    * @type {number}

@@ -1,3 +1,5 @@
+import { Unit } from '../enums/unit';
+
 /**
  * Represents a material type for items
  * @export
@@ -35,11 +37,11 @@ export interface MaterialType {
    */
   iconUrl?: string;
   /**
-   * Base unit of measurement. Valid values: GRAM, MILLILITER, PIECE
-   * @type {string}
+   * Base unit of measurement
+   * @type {Unit}
    * @memberof MaterialType
    */
-  baseUnit: string;
+  baseUnit: Unit;
   /**
    * Base weight per unit in the base unit (grams if GRAM, milliliters if MILLILITER, or per piece)
    * @type {number}

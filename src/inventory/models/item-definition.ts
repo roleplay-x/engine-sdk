@@ -2,6 +2,7 @@ import { ItemComponent } from './components/item-component';
 import { BindingRules } from './binding-rules';
 import { ItemMobility } from './item-mobility';
 import { ItemDefinitionMaterial } from './item-definition-material';
+import { Unit } from '../enums/unit';
 
 /**
  * Represents an item definition that describes the blueprint for creating items
@@ -71,10 +72,10 @@ export interface ItemDefinition {
   categoryName: string;
   /**
    * Primary unit of measurement
-   * @type {string}
+   * @type {Unit}
    * @memberof ItemDefinition
    */
-  primaryUnit: string;
+  primaryUnit: Unit;
   /**
    * Weight per unit in kilograms
    * @type {number}

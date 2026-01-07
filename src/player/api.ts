@@ -21,6 +21,7 @@ import { AttachmentPoint } from '../inventory/models/attachment-point';
 import { EquipmentSlot } from '../inventory/models/equipment-slot';
 import { Currency } from '../ledger/models/currency';
 import { LedgerAccount } from '../ledger/models/ledger-account';
+import { EquipmentSlotTarget } from '../inventory/enums/equipment-slot-target';
 
 export class PlayerApi {
   constructor(private readonly client: EngineClient) {}
@@ -392,12 +393,18 @@ export class PlayerApi {
   /**
    * Retrieves all enabled equipment slots for the player.<br/>This endpoint performs character-level operations. The token must be associated with a character.<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [Access Token]<br/>🔓 [Session Token]
    * @summary Get player equipment slots
+   * @param {Object} [query]                        Query parameters.
+   * @param {EquipmentSlotTarget} [query.target]    Filter by equipment slot target.
    * @param {*} [options] Override http request option.
    * @throws {EngineError}
    */
-  public getEquipmentSlots(options?: ApiOptions): Promise<EquipmentSlot[]> {
+  public getEquipmentSlots(
+    query?: { target?: EquipmentSlotTarget },
+    options?: ApiOptions,
+  ): Promise<EquipmentSlot[]> {
     return this.client.get<EquipmentSlot[]>({
       url: 'player/equipment-slots',
+      query,
       options,
     });
   }

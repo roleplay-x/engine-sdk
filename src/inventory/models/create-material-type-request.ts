@@ -1,3 +1,5 @@
+import { Unit } from '../enums/unit';
+
 /**
  * Request to create a material type
  * @export
@@ -29,11 +31,11 @@ export interface CreateMaterialTypeRequest {
    */
   iconUrl?: string;
   /**
-   * Base unit of measurement. Valid values: GRAM, MILLILITER, PIECE
-   * @type {string}
+   * Base unit of measurement
+   * @type {Unit}
    * @memberof CreateMaterialTypeRequest
    */
-  baseUnit?: string;
+  baseUnit?: Unit;
   /**
    * Base weight per unit
    * @type {number}

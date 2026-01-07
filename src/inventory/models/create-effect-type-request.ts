@@ -1,3 +1,6 @@
+import { EffectTarget } from '../enums/effect-target';
+import { EffectPolarity } from '../enums/effect-polarity';
+
 /**
  * Request to create an effect type
  * @export
@@ -23,17 +26,17 @@ export interface CreateEffectTypeRequest {
    */
   description?: string;
   /**
-   * Target entity type. Valid values: CHARACTER, ITEM, VEHICLE
-   * @type {string}
+   * Target entity type
+   * @type {EffectTarget}
    * @memberof CreateEffectTypeRequest
    */
-  target?: string;
+  target?: EffectTarget;
   /**
-   * Whether higher or lower values are beneficial. Valid values: POSITIVE, NEGATIVE
-   * @type {string}
+   * Whether higher or lower values are beneficial
+   * @type {EffectPolarity}
    * @memberof CreateEffectTypeRequest
    */
-  polarity?: string;
+  polarity?: EffectPolarity;
   /**
    * Initial value when the effect is first applied
    * @type {number}

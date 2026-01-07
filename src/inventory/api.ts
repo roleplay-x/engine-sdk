@@ -24,6 +24,7 @@ import { CreateMaterialTypeRequest } from './models/create-material-type-request
 import { UpdateMaterialTypeRequest } from './models/update-material-type-request';
 import { CreateEffectTypeRequest } from './models/create-effect-type-request';
 import { UpdateEffectTypeRequest } from './models/update-effect-type-request';
+import { EquipmentSlotTarget } from './enums/equipment-slot-target';
 
 export class InventoryApi {
   constructor(private readonly client: EngineClient) {}
@@ -396,14 +397,16 @@ export class InventoryApi {
   /**
    * Returns a list of equipment slots based on the provided filters.<br/>This endpoint performs server-level operations. The token does not need to be associated with any account or character.<br/><b>Account Policies</b>: account_policy:read:inventory<br/><br/> This endpoint requires authorization, and supports following token types:<br/>🔓 [API Key] <b>Required Scopes</b>: read:inventory<br/>🔓 [SSO Token]<br/>🔓 [Access Token]<br/>🔓 [Session Token]
    * @summary Get equipment slots
-   * @param {Object} [query]                   Query parameters.
-   * @param {boolean} [query.enabled]          Filter by enabled status.
-   * @param {boolean} [query.noCache]          If `true`, bypass server cache and fetch fresh data.
+   * @param {Object} [query]                        Query parameters.
+   * @param {EquipmentSlotTarget} [query.target]    Filter by equipment slot target.
+   * @param {boolean} [query.enabled]               Filter by enabled status.
+   * @param {boolean} [query.noCache]               If `true`, bypass server cache and fetch fresh data.
    * @param {ApiOptions} [options] Override http request options.
    * @throws {EngineError}
    */
   public getEquipmentSlots(
     query?: {
+      target?: EquipmentSlotTarget;
       enabled?: boolean;
       noCache?: boolean;
     },

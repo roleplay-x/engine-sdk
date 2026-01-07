@@ -1,3 +1,6 @@
+import { EquipmentSlotTarget } from '../enums/equipment-slot-target';
+import { EquipmentSlotCategory } from '../enums/equipment-slot-category';
+
 /**
  * Represents an equipment slot in the inventory system
  * @export
@@ -17,11 +20,11 @@ export interface EquipmentSlot {
    */
   name: string;
   /**
-   * Target type identifier (e.g., CHARACTER, VEHICLE)
-   * @type {string}
+   * Target type identifier
+   * @type {EquipmentSlotTarget}
    * @memberof EquipmentSlot
    */
-  target: string;
+  target: EquipmentSlotTarget;
   /**
    * Localized target type name
    * @type {string}
@@ -30,10 +33,10 @@ export interface EquipmentSlot {
   targetName: string;
   /**
    * Equipment slot category identifier
-   * @type {string}
+   * @type {EquipmentSlotCategory}
    * @memberof EquipmentSlot
    */
-  category: string;
+  category: EquipmentSlotCategory;
   /**
    * Localized category name
    * @type {string}

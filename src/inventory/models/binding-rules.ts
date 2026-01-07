@@ -1,3 +1,5 @@
+import { BindType } from '../enums/bind-type';
+
 /**
  * Binding rules for segment-based binding
  * @export
@@ -60,10 +62,10 @@ export interface TemporaryBindingRules {
 export interface BindingRules {
   /**
    * Type of binding
-   * @type {string}
+   * @type {BindType}
    * @memberof BindingRules
    */
-  type: string;
+  type: BindType;
   /**
    * Segment-specific binding rules, required when Type is ON_SEGMENT
    * @type {SegmentBindingRules}

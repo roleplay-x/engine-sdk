@@ -3,6 +3,7 @@ import { ItemLocation } from './item-location';
 import { ItemState } from './item-state';
 import { ItemCategory } from './item-category';
 import { MaterialType } from './material-type';
+import { Unit } from '../enums/unit';
 
 /**
  * Represents an item instance in the game world
@@ -90,10 +91,10 @@ export interface Item {
   category: ItemCategory;
   /**
    * Primary unit of measurement
-   * @type {string}
+   * @type {Unit}
    * @memberof Item
    */
-  primaryUnit: string;
+  primaryUnit: Unit;
   /**
    * Weight per unit in kilograms
    * @type {number}

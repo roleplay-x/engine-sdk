@@ -30,6 +30,8 @@ import { MoveItemsRequest } from './models/move-items-request';
 import { PaginatedItems } from '../common/paginated-items';
 import { ItemLocationType } from './enums/item-location-type';
 import { BindType } from './enums/bind-type';
+import { EquipmentSlotCategory } from './enums/equipment-slot-category';
+import { Unit } from './enums/unit';
 
 describe('InventoryApi', () => {
   const apiUrl = 'http://mock-api';
@@ -351,7 +353,7 @@ describe('InventoryApi', () => {
       name: 'Primary Weapon',
       target: 'CHARACTER',
       targetName: 'Character',
-      category: 'WEAPON',
+      category: EquipmentSlotCategory.Tool,
       categoryName: 'Weapon',
       iconUrl: 'https://example.com/primary.png',
       visible: true,
@@ -367,7 +369,7 @@ describe('InventoryApi', () => {
           id: 'PRIMARY_WEAPON',
           defaultName: 'Primary Weapon',
           target: 'CHARACTER',
-          category: 'WEAPON',
+          category: EquipmentSlotCategory.Tool,
           iconUrl: 'https://example.com/primary.png',
           enabled: true,
         };
@@ -710,7 +712,7 @@ describe('InventoryApi', () => {
       latest: true,
       categoryId: 'WEAPONS',
       categoryName: 'Weapons',
-      primaryUnit: 'UNIT',
+      primaryUnit: Unit.Piece,
       weightPerUnit: 1.5,
       volumePerUnit: 0.5,
       components: [],
@@ -725,7 +727,7 @@ describe('InventoryApi', () => {
         const req: CreateItemDefinitionRequest = {
           definitionCode: 'PISTOL_M9',
           categoryId: 'WEAPONS',
-          primaryUnit: 'UNIT',
+          primaryUnit: Unit.Piece,
           weightPerUnit: 1.5,
           volumePerUnit: 0.5,
         };
@@ -871,7 +873,7 @@ describe('InventoryApi', () => {
         data: {},
       },
       category: mockCategory,
-      primaryUnit: 'UNIT',
+      primaryUnit: Unit.Piece,
       weightPerUnit: 1.5,
       volumePerUnit: 0.5,
       totalWeight: 1.5,

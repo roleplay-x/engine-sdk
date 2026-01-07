@@ -1,3 +1,6 @@
+import { EquipmentSlotTarget } from '../enums/equipment-slot-target';
+import { EquipmentSlotCategory } from '../enums/equipment-slot-category';
+
 /**
  * Request to create an equipment slot
  * @export
@@ -17,17 +20,17 @@ export interface CreateEquipmentSlotRequest {
    */
   defaultName: string;
   /**
-   * Target type this slot applies to (e.g., CHARACTER, VEHICLE)
-   * @type {string}
+   * Target type this slot applies to
+   * @type {EquipmentSlotTarget}
    * @memberof CreateEquipmentSlotRequest
    */
-  target: string;
+  target: EquipmentSlotTarget;
   /**
-   * Category of the equipment slot (e.g., HEAD, TORSO, ACCESSORY)
-   * @type {string}
+   * Category of the equipment slot
+   * @type {EquipmentSlotCategory}
    * @memberof CreateEquipmentSlotRequest
    */
-  category: string;
+  category: EquipmentSlotCategory;
   /**
    * URL to the icon image representing this equipment slot
    * @type {string}

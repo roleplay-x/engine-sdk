@@ -22,6 +22,7 @@ import { EquipmentSlot } from '../inventory/models/equipment-slot';
 import { Currency } from '../ledger/models/currency';
 import { LedgerAccount } from '../ledger/models/ledger-account';
 import { WithdrawRequest } from './models/withdraw-request';
+import { EquipmentSlotCategory } from '../inventory/enums/equipment-slot-category';
 
 describe('PlayerApi', () => {
   const apiUrl = 'http://mock-api';
@@ -885,7 +886,7 @@ describe('PlayerApi', () => {
         name: 'Primary Weapon',
         target: 'CHARACTER',
         targetName: 'Character',
-        category: 'WEAPON',
+        category: EquipmentSlotCategory.Tool,
         categoryName: 'Weapon',
         visible: true,
         enabled: true,
@@ -898,7 +899,7 @@ describe('PlayerApi', () => {
         name: 'Secondary Weapon',
         target: 'CHARACTER',
         targetName: 'Character',
-        category: 'WEAPON',
+        category: EquipmentSlotCategory.Tool,
         categoryName: 'Weapon',
         visible: true,
         enabled: true,
