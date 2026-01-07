@@ -4,6 +4,7 @@ import { ItemState } from './item-state';
 import { ItemCategory } from './item-category';
 import { MaterialType } from './material-type';
 import { Unit } from '../enums/unit';
+import { ItemMobility } from './item-mobility';
 
 /**
  * Represents an item instance in the game world
@@ -89,6 +90,12 @@ export interface Item {
    * @memberof Item
    */
   category: ItemCategory;
+  /**
+   * Mobility constraints for the item
+   * @type {ItemMobility}
+   * @memberof Item
+   */
+  mobility?: ItemMobility;
   /**
    * Primary unit of measurement
    * @type {Unit}
