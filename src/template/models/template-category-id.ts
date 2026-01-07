@@ -6,4 +6,5 @@ export enum TemplateCategoryId {
   CharacterAppearance = 'CHARACTER_APPEARANCE',
   SpawnLocationSelection = 'SPAWN_LOCATION_SELECTION',
   AnimationMenu = 'ANIMATION_MENU',
+  Inventory = 'INVENTORY',
 }
